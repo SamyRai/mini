@@ -1,0 +1,145 @@
+project_name: mini-mcp
+
+before:
+  hooks:
+    - go mod tidy
+    - go generate ./...
+
+builds:
+  - main: ./cmd/mini-mcp/main.go
+    binary: mini-mcp
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+      - 386
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+      - -X main.builtBy=goreleaser
+
+  - main: ./cmd/mini-mcp-cli/main.go
+    binary: mini-mcp-cli
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+      - 386
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+      - -X main.builtBy=goreleaser
+
+archives:
+  - format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+    format_overrides:
+      - goos: windows
+        format: zip
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+
+release:
+  github:
+    owner: YOUR_USERNAME
+    name: mini-mcp
+
+  # If you want to manually draft the release uncomment this:
+  # draft: true
+
+  # If you want to upload to another repository uncomment this:
+  # name_template: "{{.ProjectName}}-v{{.Version}}"
+
+brews:
+  - name: mini-mcp
+    tap:
+      owner: YOUR_USERNAME
+      name: homebrew-tap
+    commit_author:
+      name: Damir Mukimov
+      email: damir.mukimov@example.com
+    homepage: "https://github.com/YOUR_USERNAME/mini-mcp"
+    description: "Infrastructure Management Platform with MCP Protocol"
+    license: "MIT"
+    test: |
+      system "#{bin}/mini-mcp", "--version"
+
+scoop:
+  bucket:
+    owner: YOUR_USERNAME
+    name: scoop-bucket
+  homepage: "https://github.com/YOUR_USERNAME/mini-mcp"
+  description: "Infrastructure Management Platform with MCP Protocol"
+  license: "MIT"
+
+nfpms:
+  - package_name: mini-mcp
+    homepage: "https://github.com/YOUR_USERNAME/mini-mcp"
+    description: "Infrastructure Management Platform with MCP Protocol"
+    maintainer: "Damir Mukimov <damir.mukimov@example.com>"
+    license: "MIT"
+    formats:
+      - deb
+      - rpm
+    bindir: /usr/bin
+
+snapcrafts:
+  - name: mini-mcp
+    summary: "Infrastructure Management Platform with MCP Protocol"
+    description: "A production-ready Model Context Protocol (MCP) server and CLI tool for infrastructure management"
+    grade: stable
+    confinement: strict
+    apps:
+      mini-mcp:
+        command: mini-mcp
+        plugs: ["network", "network-bind"]
+
+dockers:
+  - image_templates:
+      - "ghcr.io/YOUR_USERNAME/mini-mcp:latest"
+      - "ghcr.io/YOUR_USERNAME/mini-mcp:{{ .Tag }}"
+    goos: linux
+    goarch: amd64
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--label=org.opencontainers.image.source={{.GitURL}}"
+
+docker_manifests:
+  - name_template: ghcr.io/YOUR_USERNAME/mini-mcp:{{ .Tag }}
+    image_templates:
+      - ghcr.io/YOUR_USERNAME/mini-mcp:{{ .Tag }}-amd64
+      - ghcr.io/YOUR_USERNAME/mini-mcp:{{ .Tag }}-arm64
+  - name_template: ghcr.io/YOUR_USERNAME/mini-mcp:latest
+    image_templates:
+      - ghcr.io/YOUR_USERNAME/mini-mcp:latest-amd64
+      - ghcr.io/YOUR_USERNAME/mini-mcp:latest-arm64

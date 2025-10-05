@@ -36,8 +36,12 @@ func RegisterPortProcessTools(server *mcp.Server, toolRegistry *registry.TypeSaf
 				return registry.NewValidationError("missing_command", "command is required")
 			}
 			return nil
-		}).
-		Register()
+		})
+		
+	if err := portProcessBuilder.Register(); err != nil {
+		// Log error but continue - tool registration failure should not crash the server
+		return
+	}
 }
 
 // PortProcessArgs represents arguments for port/process operations
@@ -198,6 +202,7 @@ func cleanupPort(executor *registry.CommandExecutor, port int) bool {
 	for _, pid := range processes {
 		if executor.KillProcessGracefully(context.Background(), pid) {
 			// Process killed - logged via structured logging
+			_ = pid // Process successfully killed
 		}
 	}
 

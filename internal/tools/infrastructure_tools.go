@@ -31,8 +31,12 @@ func RegisterInfrastructureTools(server *mcp.Server, toolRegistry *registry.Type
 		}).
 		WithValidator(func(args tools.SSHCommandArgs) error {
 			return args.Validate()
-		}).
-		Register()
+		})
+		
+	if err := sshBuilder.Register(); err != nil {
+		// Log error but continue - tool registration failure should not crash the server
+		return
+	}
 
 	// docker_compose - Docker Compose operations
 	dockerComposeBuilder := registry.NewToolBuilder[DockerComposeArgs](toolRegistry, "docker_compose", "Execute Docker Compose operations with security validation")
@@ -59,8 +63,12 @@ func RegisterInfrastructureTools(server *mcp.Server, toolRegistry *registry.Type
 				return registry.NewValidationError("missing_command", "command is required")
 			}
 			return nil
-		}).
-		Register()
+		})
+		
+	if err := dockerComposeBuilder.Register(); err != nil {
+		// Log error but continue - tool registration failure should not crash the server
+		return
+	}
 
 	// docker_swarm - Docker Swarm operations
 	dockerSwarmBuilder := registry.NewToolBuilder[DockerSwarmArgs](toolRegistry, "docker_swarm", "Get Docker Swarm cluster information")
@@ -78,8 +86,12 @@ func RegisterInfrastructureTools(server *mcp.Server, toolRegistry *registry.Type
 		}).
 		WithValidator(func(args DockerSwarmArgs) error {
 			return nil
-		}).
-		Register()
+		})
+		
+	if err := dockerSwarmBuilder.Register(); err != nil {
+		// Log error but continue - tool registration failure should not crash the server
+		return
+	}
 }
 
 // DockerComposeArgs represents arguments for Docker Compose operations

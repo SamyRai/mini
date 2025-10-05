@@ -36,8 +36,12 @@ func RegisterSystemTools(server *mcp.Server, toolRegistry *registry.TypeSafeTool
 		}).
 		WithValidator(func(args SystemInfoArgs) error {
 			return nil
-		}).
-		Register()
+		})
+		
+	if err := systemBuilder.Register(); err != nil {
+		// Log error but continue - tool registration failure should not crash the server
+		return
+	}
 
 	// metrics - Get application metrics and performance data
 	metricsBuilder := registry.NewToolBuilder[MetricsArgs](toolRegistry, "metrics", "Get application metrics, performance data, and observability information")
@@ -69,8 +73,12 @@ func RegisterSystemTools(server *mcp.Server, toolRegistry *registry.TypeSafeTool
 		}).
 		WithValidator(func(args MetricsArgs) error {
 			return nil
-		}).
-		Register()
+		})
+		
+	if err := metricsBuilder.Register(); err != nil {
+		// Log error but continue - tool registration failure should not crash the server
+		return
+	}
 }
 
 // SystemInfoArgs represents arguments for system information

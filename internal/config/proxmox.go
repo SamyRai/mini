@@ -136,7 +136,8 @@ func loadFromEnv(config *ProxmoxConfig) {
 	}
 	if timeout := os.Getenv("PROXMOX_TIMEOUT"); timeout != "" {
 		if _, err := fmt.Sscanf(timeout, "%d", &config.Timeout); err != nil {
-			// Timeout parse error handled by default value
+			// Timeout parse error - use default value
+			config.Timeout = 30
 		}
 	}
 	if node := os.Getenv("PROXMOX_NODE"); node != "" {

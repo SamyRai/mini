@@ -150,7 +150,7 @@ func (ce *CommandExecutor) ExecuteSSHCommand(ctx context.Context, host, command,
 func (ce *CommandExecutor) ExecuteDockerCompose(ctx context.Context, path, command string, detached, removeVolumes bool) (string, error) {
 	// Validate Docker Compose path
 	if err := ce.security.ValidatePath(path); err != nil {
-		return "", fmt.Errorf("Docker Compose path validation failed: %w", err)
+		return "", fmt.Errorf("docker compose path validation failed: %w", err)
 	}
 
 	// Validate Docker Compose command is allowed
@@ -163,7 +163,7 @@ func (ce *CommandExecutor) ExecuteDockerCompose(ctx context.Context, path, comma
 		}
 	}
 	if !commandAllowed {
-		return "", fmt.Errorf("Docker Compose command not allowed: %s", command)
+		return "", fmt.Errorf("docker compose command not allowed: %s", command)
 	}
 
 	// Build docker-compose command

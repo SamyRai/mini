@@ -1,8 +1,28 @@
 # Mini MCP - Infrastructure Management Platform
 
+[![Go Version](https://img.shields.io/badge/go-1.25+-blue.svg)](https://golang.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Go Report Card](https://goreportcard.com/badge/github.com/YOUR_USERNAME/mini-mcp)](https://goreportcard.com/report/github.com/YOUR_USERNAME/mini-mcp)
+[![CI Status](https://github.com/YOUR_USERNAME/mini-mcp/workflows/CI/badge.svg)](https://github.com/YOUR_USERNAME/mini-mcp/actions)
+[![Go Reference](https://pkg.go.dev/badge/github.com/YOUR_USERNAME/mini-mcp.svg)](https://pkg.go.dev/github.com/YOUR_USERNAME/mini-mcp)
+[![Release](https://img.shields.io/github/release/YOUR_USERNAME/mini-mcp.svg)](https://github.com/YOUR_USERNAME/mini-mcp/releases)
+
 **🏗️ [Architecture Documentation](docs/README_ARCHITECTURE.md) | [🛠️ Tools Documentation](docs/README_TOOLS.md) | [⚙️ Proxmox Configuration](docs/PROXMOX_CONFIG.md) | [🔒 Type Safety](docs/TYPE_SAFETY_IMPROVEMENTS.md) | [🤖 Agent Guide](docs/AGENT.md)**
 
 A production-ready Model Context Protocol (MCP) server and CLI tool for infrastructure management with comprehensive security, authentication, monitoring, and health check capabilities.
+
+## 📋 Table of Contents
+
+- [✨ Features](#-features)
+- [🚀 Quick Start](#-quick-start)
+- [📖 Usage](#-usage)
+- [🐳 Docker Management](#-docker-management)
+- [⚙️ Configuration](#️-configuration)
+- [🧪 Testing](#-testing)
+- [🔧 Development](#-development)
+- [📚 Documentation](#-documentation)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
 
 ## 🚀 Features
 

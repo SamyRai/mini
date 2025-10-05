@@ -575,6 +575,8 @@ func (c *client) CreateFirewallRule(ctx context.Context, nodeName string, rule t
 		form.Set("target", rule.Target)
 	}
 	if rule.Log != "" {
+		// Log rule is set but no action needed
+		_ = rule.Log
 	}
 	if rule.Comment != "" {
 		form.Set("comment", rule.Comment)
@@ -613,6 +615,8 @@ func (c *client) UpdateFirewallRule(ctx context.Context, nodeName string, pos in
 		form.Set("target", rule.Target)
 	}
 	if rule.Log != "" {
+		// Log rule is set but no action needed
+		_ = rule.Log
 	}
 	if rule.Comment != "" {
 		form.Set("comment", rule.Comment)

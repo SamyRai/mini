@@ -1,0 +1,166 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+    inputs:
+      quality_type:
+        description: 'Type of quality check to run'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - linting
+          - formatting
+          - performance
+          - complexity
+
+jobs:
+  quality-check:
+    name: Quality Check
+    runs-on: ubuntu-latest
+    if: ${{ inputs.quality_type == 'all' || inputs.quality_type == 'linting' || inputs.quality_type == 'formatting' }}
+    permissions:
+      contents: read
+      pull-requests: read
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.25'
+        cache: true
+        cache-dependency-path: '**/go.sum'
+
+    - name: Download dependencies
+      run: go mod download
+
+    - name: Run golangci-lint
+      if: ${{ inputs.quality_type == 'all' || inputs.quality_type == 'linting' }}
+      uses: golangci/golangci-lint-action@v6
+      with:
+        version: v1.61.0
+        args: --timeout=5m --verbose --out-format=github-actions
+
+    - name: Run go vet
+      if: ${{ inputs.quality_type == 'all' || inputs.quality_type == 'linting' }}
+      run: go vet ./...
+
+    - name: Run go fmt check
+      if: ${{ inputs.quality_type == 'all' || inputs.quality_type == 'formatting' }}
+      run: |
+        if [ "$(gofmt -s -l . | wc -l)" -gt 0 ]; then
+          echo "The following files are not formatted:"
+          gofmt -s -l .
+          exit 1
+        fi
+
+    - name: Check for unused dependencies
+      if: ${{ inputs.quality_type == 'all' || inputs.quality_type == 'linting' }}
+      run: |
+        go install honnef.co/go/tools/cmd/staticcheck@latest
+        staticcheck -checks=all ./...
+
+    - name: Run ineffassign
+      if: ${{ inputs.quality_type == 'all' || inputs.quality_type == 'linting' }}
+      run: |
+        go install github.com/gordonklaus/ineffassign@latest
+        ineffassign ./...
+
+    - name: Run misspell
+      if: ${{ inputs.quality_type == 'all' || inputs.quality_type == 'linting' }}
+      run: |
+        go install github.com/client9/misspell/cmd/misspell@latest
+        misspell -error .
+
+  performance-check:
+    name: Performance Check
+    runs-on: ubuntu-latest
+    if: ${{ inputs.quality_type == 'all' || inputs.quality_type == 'performance' }}
+    permissions:
+      contents: read
+      pull-requests: read
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.25'
+        cache: true
+        cache-dependency-path: '**/go.sum'
+
+    - name: Download dependencies
+      run: go mod download
+
+    - name: Run benchmarks
+      run: go test -bench=. -benchmem ./...
+
+    - name: Run performance tests
+      run: go test -race -coverprofile=coverage.out -covermode=atomic -timeout=10m ./...
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./coverage.out
+        flags: performance
+        name: codecov-performance
+        fail_ci_if_error: false
+        token: ${{ secrets.CODECOV_TOKEN }}
+
+  complexity-check:
+    name: Complexity Check
+    runs-on: ubuntu-latest
+    if: ${{ inputs.quality_type == 'all' || inputs.quality_type == 'complexity' }}
+    permissions:
+      contents: read
+      pull-requests: read
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.25'
+        cache: true
+        cache-dependency-path: '**/go.sum'
+
+    - name: Download dependencies
+      run: go mod download
+
+    - name: Run gocyclo
+      run: |
+        go install github.com/fzipp/gocyclo/cmd/gocyclo@latest
+        gocyclo -over 15 ./...
+
+    - name: Run goconst
+      run: |
+        go install github.com/jgautheron/goconst/cmd/goconst@latest
+        goconst ./...
+
+    - name: Run gosec
+      run: |
+        go install github.com/securecodewarrior/gosec/v2/cmd/gosec@latest
+        gosec ./...
+
+    - name: Run gocritic
+      run: |
+        go install github.com/go-critic/go-critic/cmd/gocritic@latest
+        gocritic check ./...

@@ -1,0 +1,138 @@
+name: Security Audit
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    - cron: '0 4 * * 1' # Weekly on Monday at 4 AM UTC
+  workflow_dispatch:
+    inputs:
+      audit_type:
+        description: 'Type of security audit to run'
+        required: true
+        default: 'full'
+        type: choice
+        options:
+          - full
+          - dependencies
+          - secrets
+          - supply-chain
+
+jobs:
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+      pull-requests: read
+      actions: read
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.25'
+        cache: true
+        cache-dependency-path: '**/go.sum'
+
+    - name: Download dependencies
+      run: go mod download
+
+    - name: Run Trivy vulnerability scanner
+      if: ${{ inputs.audit_type == 'full' || inputs.audit_type == 'dependencies' }}
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+        severity: 'CRITICAL,HIGH,MEDIUM,LOW'
+        ignore-unfixed: false
+
+    - name: Upload Trivy scan results
+      if: always() && (inputs.audit_type == 'full' || inputs.audit_type == 'dependencies')
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: 'trivy-results.sarif'
+
+    - name: Run Gosec Security Scanner
+      if: ${{ inputs.audit_type == 'full' || inputs.audit_type == 'secrets' }}
+      uses: securecodewarrior/github-action-gosec@master
+      with:
+        args: '-fmt sarif -out gosec.sarif -severity medium -confidence medium ./...'
+
+    - name: Upload Gosec scan results
+      if: always() && (inputs.audit_type == 'full' || inputs.audit_type == 'secrets')
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: gosec.sarif
+
+    - name: Run Semgrep
+      if: ${{ inputs.audit_type == 'full' || inputs.audit_type == 'secrets' }}
+      uses: returntocorp/semgrep-action@v1
+      with:
+        config: >-
+          p/security-audit
+          p/secrets
+          p/owasp-top-ten
+          p/gosec
+        generateSarif: "1"
+        generateGitlab: "0"
+        generateJunit: "0"
+
+    - name: Upload Semgrep scan results
+      if: always() && (inputs.audit_type == 'full' || inputs.audit_type == 'secrets')
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: /tmp/semgrep.sarif
+
+    - name: Run govulncheck
+      if: ${{ inputs.audit_type == 'full' || inputs.audit_type == 'dependencies' }}
+      run: |
+        go install golang.org/x/vuln/cmd/govulncheck@latest
+        govulncheck -json ./... > govulncheck-results.json || true
+        cat govulncheck-results.json
+
+    - name: Run Nancy vulnerability scanner
+      if: ${{ inputs.audit_type == 'full' || inputs.audit_type == 'dependencies' }}
+      run: |
+        go install github.com/sonatypecommunity/nancy@latest
+        go list -json -deps ./... | nancy sleuth
+
+    - name: Run OWASP Dependency Check
+      if: ${{ inputs.audit_type == 'full' || inputs.audit_type == 'dependencies' }}
+      uses: dependency-check/Dependency-Check_Action@main
+      with:
+        project: 'mini-mcp'
+        path: '.'
+        format: 'SARIF'
+        out: './dependency-check-report.sarif'
+
+    - name: Upload Dependency Check results
+      if: always() && (inputs.audit_type == 'full' || inputs.audit_type == 'dependencies')
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: './dependency-check-report.sarif'
+
+    - name: Run Supply Chain Security Scan
+      if: ${{ inputs.audit_type == 'full' || inputs.audit_type == 'supply-chain' }}
+      run: |
+        go install github.com/google/go-licenses@latest
+        go-licenses report ./... > licenses.txt
+        go-licenses check ./...
+
+    - name: Upload license report
+      if: always() && (inputs.audit_type == 'full' || inputs.audit_type == 'supply-chain')
+      uses: actions/upload-artifact@v4
+      with:
+        name: license-report
+        path: licenses.txt
+        retention-days: 30

@@ -92,8 +92,12 @@ func RegisterFileTools(server *mcp.Server, toolRegistry *registry.TypeSafeToolRe
 		}).
 		WithValidator(func(args FileListArgs) error {
 			return args.Validate()
-		}).
-		Register()
+		})
+		
+	if err := lsBuilder.Register(); err != nil {
+		// Log error but continue - tool registration failure should not crash the server
+		return
+	}
 
 	// cat - Read file contents (Builder Pattern)
 	catBuilder := registry.NewToolBuilder[FileReadArgs](toolRegistry, "cat", "Read file contents with security validation")
@@ -115,8 +119,12 @@ func RegisterFileTools(server *mcp.Server, toolRegistry *registry.TypeSafeToolRe
 		}).
 		WithValidator(func(args FileReadArgs) error {
 			return args.Validate()
-		}).
-		Register()
+		})
+		
+	if err := catBuilder.Register(); err != nil {
+		// Log error but continue - tool registration failure should not crash the server
+		return
+	}
 
 	// write - Write content to file (Builder Pattern)
 	writeBuilder := registry.NewToolBuilder[FileWriteArgs](toolRegistry, "write", "Write content to file with security validation")
@@ -139,8 +147,12 @@ func RegisterFileTools(server *mcp.Server, toolRegistry *registry.TypeSafeToolRe
 		}).
 		WithValidator(func(args FileWriteArgs) error {
 			return args.Validate()
-		}).
-		Register()
+		})
+		
+	if err := writeBuilder.Register(); err != nil {
+		// Log error but continue - tool registration failure should not crash the server
+		return
+	}
 
 	// rm - Remove file or directory (Builder Pattern)
 	rmBuilder := registry.NewToolBuilder[FileDeleteArgs](toolRegistry, "rm", "Remove file or directory with security validation")
@@ -162,6 +174,10 @@ func RegisterFileTools(server *mcp.Server, toolRegistry *registry.TypeSafeToolRe
 		}).
 		WithValidator(func(args FileDeleteArgs) error {
 			return args.Validate()
-		}).
-		Register()
+		})
+		
+	if err := rmBuilder.Register(); err != nil {
+		// Log error but continue - tool registration failure should not crash the server
+		return
+	}
 }

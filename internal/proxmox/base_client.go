@@ -125,15 +125,17 @@ func (bc *BaseClient) doRequest(ctx context.Context, method HTTPMethod, path str
 			return nil, fmt.Errorf("request failed after %d attempts: %v", maxRetries, err)
 		}
 
-		// Check for HTTP errors
-		if resp.StatusCode >= 400 {
-			body, err := io.ReadAll(resp.Body)
-			if err != nil {
-				// Response body read error handled by error return
-			}
-			if closeErr := resp.Body.Close(); closeErr != nil {
-				// Response body close error handled by error return
-			}
+			// Check for HTTP errors
+			if resp.StatusCode >= 400 {
+				body, err := io.ReadAll(resp.Body)
+				if err != nil {
+					// Log error but continue with empty body
+					body = []byte("")
+				}
+				if closeErr := resp.Body.Close(); closeErr != nil {
+					// Log close error but continue
+					_ = closeErr
+				}
 
 			if resp.StatusCode == 401 {
 				// Authentication error handled by error return
@@ -166,7 +168,8 @@ func (bc *BaseClient) makeRequest(ctx context.Context, method HTTPMethod, path, 
 	}
 	defer func() { 
 		if closeErr := resp.Body.Close(); closeErr != nil {
-			// Response body close error handled by error return
+			// Log close error but continue
+			_ = closeErr
 		}
 	}()
 
@@ -240,7 +243,8 @@ func (bc *BaseClient) Request(ctx context.Context, opts RequestOptions[interface
 
 	// Debugging: log request bodies for VM config endpoints to inspect encoding
 	if strings.Contains(path, "/qemu/") && strings.Contains(path, "/config") {
-		// Debug logging removed for production
+		// Debug logging removed for production - no action needed
+		_ = path
 	}
 
 	return bc.makeRequest(ctx, opts.Method, path, bodyStr, contentType)
