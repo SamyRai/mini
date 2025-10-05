@@ -125,17 +125,17 @@ func (bc *BaseClient) doRequest(ctx context.Context, method HTTPMethod, path str
 			return nil, fmt.Errorf("request failed after %d attempts: %v", maxRetries, err)
 		}
 
-			// Check for HTTP errors
-			if resp.StatusCode >= 400 {
-				body, err := io.ReadAll(resp.Body)
-				if err != nil {
-					// Log error but continue with empty body
-					body = []byte("")
-				}
-				if closeErr := resp.Body.Close(); closeErr != nil {
-					// Log close error but continue
-					_ = closeErr
-				}
+		// Check for HTTP errors
+		if resp.StatusCode >= 400 {
+			body, err := io.ReadAll(resp.Body)
+			if err != nil {
+				// Log error but continue with empty body
+				body = []byte("")
+			}
+			if closeErr := resp.Body.Close(); closeErr != nil {
+				// Log close error but continue
+				_ = closeErr
+			}
 
 			if resp.StatusCode == 401 {
 				// Authentication error handled by error return
@@ -166,7 +166,7 @@ func (bc *BaseClient) makeRequest(ctx context.Context, method HTTPMethod, path, 
 	if err != nil {
 		return nil, err
 	}
-	defer func() { 
+	defer func() {
 		if closeErr := resp.Body.Close(); closeErr != nil {
 			// Log close error but continue
 			_ = closeErr

@@ -145,7 +145,7 @@ func ValidateProxmoxArgs(host, user, password string) struct {
 	Errors  []error
 } {
 	var errors []error
-	
+
 	if host == "" {
 		errors = append(errors, ValidationError{Field: "host", Message: "host is required"})
 	}
@@ -155,7 +155,7 @@ func ValidateProxmoxArgs(host, user, password string) struct {
 	if password == "" {
 		errors = append(errors, ValidationError{Field: "password", Message: "password is required"})
 	}
-	
+
 	return struct {
 		IsValid bool
 		Errors  []error

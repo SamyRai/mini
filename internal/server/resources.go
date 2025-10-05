@@ -19,16 +19,16 @@ func registerResources(server *mcp.Server) {
 		URI:         "system://info",
 	}, func(ctx context.Context, req *mcp.ReadResourceRequest) (*mcp.ReadResourceResult, error) {
 		info := map[string]interface{}{
-			"hostname": getHostname(),
+			"hostname":          getHostname(),
 			"working_directory": getWorkingDirectory(),
-			"environment": getEnvironment(),
+			"environment":       getEnvironment(),
 		}
-		
+
 		jsonData, err := json.MarshalIndent(info, "", "  ")
 		if err != nil {
 			return nil, fmt.Errorf("failed to marshal system info: %w", err)
 		}
-		
+
 		return &mcp.ReadResourceResult{
 			Contents: []*mcp.ResourceContents{{
 				URI:      req.Params.URI,

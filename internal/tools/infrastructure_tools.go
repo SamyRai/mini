@@ -32,7 +32,7 @@ func RegisterInfrastructureTools(server *mcp.Server, toolRegistry *registry.Type
 		WithValidator(func(args tools.SSHCommandArgs) error {
 			return args.Validate()
 		})
-		
+
 	if err := sshBuilder.Register(); err != nil {
 		// Log error but continue - tool registration failure should not crash the server
 		return
@@ -64,7 +64,7 @@ func RegisterInfrastructureTools(server *mcp.Server, toolRegistry *registry.Type
 			}
 			return nil
 		})
-		
+
 	if err := dockerComposeBuilder.Register(); err != nil {
 		// Log error but continue - tool registration failure should not crash the server
 		return
@@ -87,7 +87,7 @@ func RegisterInfrastructureTools(server *mcp.Server, toolRegistry *registry.Type
 		WithValidator(func(args DockerSwarmArgs) error {
 			return nil
 		})
-		
+
 	if err := dockerSwarmBuilder.Register(); err != nil {
 		// Log error but continue - tool registration failure should not crash the server
 		return

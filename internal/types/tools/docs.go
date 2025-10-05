@@ -23,14 +23,14 @@ func (args *DocArgs) Validate() error {
 	if err := validation.StringRequired("name", args.Name); err != nil {
 		return err
 	}
-	
+
 	// Validate type if provided
 	if args.Type != "" {
 		if args.Type != "command" && args.Type != "git" {
 			return validation.NewInvalidFormatError("type", "must be 'command' or 'git'")
 		}
 	}
-	
+
 	return nil
 }
 

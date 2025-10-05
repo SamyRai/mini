@@ -27,14 +27,14 @@ type Service interface {
 // ServiceImpl implements the file domain service
 type ServiceImpl struct {
 	securityValidator security.PathValidator
-	logger           logging.Logger
+	logger            logging.Logger
 }
 
 // NewService creates a new file domain service
 func NewService(securityValidator security.PathValidator, logger logging.Logger) Service {
 	return &ServiceImpl{
 		securityValidator: securityValidator,
-		logger:           logger,
+		logger:            logger,
 	}
 }
 
@@ -163,9 +163,9 @@ func (s *ServiceImpl) ListDirectory(ctx context.Context, path string) (string, e
 	}
 
 	s.logger.Debug("Directory listed successfully", map[string]any{
-		"path":         path,
-		"entry_count":  len(entries),
-		"result_size":  len(result),
+		"path":        path,
+		"entry_count": len(entries),
+		"result_size": len(result),
 	})
 
 	return result, nil

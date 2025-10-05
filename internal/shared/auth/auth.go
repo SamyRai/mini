@@ -18,21 +18,21 @@ type contextKey string
 
 // AuthConfig holds authentication configuration
 type AuthConfig struct {
-	APIKeys     map[string]string `json:"api_keys"`
-	RateLimiting time.Duration    `json:"rate_limiting"`
-	IPWhitelist  []string         `json:"ip_whitelist"`
-	MaxRequests  int              `json:"max_requests"`
-	WindowSize   time.Duration    `json:"window_size"`
+	APIKeys      map[string]string `json:"api_keys"`
+	RateLimiting time.Duration     `json:"rate_limiting"`
+	IPWhitelist  []string          `json:"ip_whitelist"`
+	MaxRequests  int               `json:"max_requests"`
+	WindowSize   time.Duration     `json:"window_size"`
 }
 
 // DefaultAuthConfig returns a secure default authentication configuration
 func DefaultAuthConfig() *AuthConfig {
 	return &AuthConfig{
 		APIKeys:      make(map[string]string),
-		RateLimiting: 100 * time.Millisecond, // Minimum time between requests
+		RateLimiting: 100 * time.Millisecond,       // Minimum time between requests
 		IPWhitelist:  []string{"127.0.0.1", "::1"}, // Localhost only by default
-		MaxRequests:  1000, // Max requests per window
-		WindowSize:   1 * time.Hour, // 1 hour window
+		MaxRequests:  1000,                         // Max requests per window
+		WindowSize:   1 * time.Hour,                // 1 hour window
 	}
 }
 
@@ -81,24 +81,24 @@ func (a *Authenticator) AuthenticateRequest(r *http.Request) (*AuthResult, error
 	if err := a.checkIPWhitelist(r); err != nil {
 		return nil, fmt.Errorf("IP not allowed: %w", err)
 	}
-	
+
 	// Extract API key
 	apiKey := a.extractAPIKey(r)
 	if apiKey == "" {
 		return nil, fmt.Errorf("missing API key")
 	}
-	
+
 	// Validate API key
 	userID, err := a.validateAPIKey(apiKey)
 	if err != nil {
 		return nil, fmt.Errorf("invalid API key: %w", err)
 	}
-	
+
 	// Check rate limiting
 	if err := a.rateLimiter.CheckLimit(userID); err != nil {
 		return nil, fmt.Errorf("rate limit exceeded: %w", err)
 	}
-	
+
 	return &AuthResult{
 		UserID:    userID,
 		APIKey:    apiKey,
@@ -118,18 +118,18 @@ type AuthResult struct {
 // checkIPWhitelist checks if the client IP is in the whitelist
 func (a *Authenticator) checkIPWhitelist(r *http.Request) error {
 	clientIP := a.getClientIP(r)
-	
+
 	// If no whitelist is configured, allow all
 	if len(a.config.IPWhitelist) == 0 {
 		return nil
 	}
-	
+
 	for _, allowedIP := range a.config.IPWhitelist {
 		if clientIP == allowedIP {
 			return nil
 		}
 	}
-	
+
 	return fmt.Errorf("IP %s not in whitelist", clientIP)
 }
 
@@ -142,18 +142,18 @@ func (a *Authenticator) getClientIP(r *http.Request) string {
 			return strings.TrimSpace(ips[0])
 		}
 	}
-	
+
 	// Check X-Real-IP header
 	if realIP := r.Header.Get("X-Real-IP"); realIP != "" {
 		return realIP
 	}
-	
+
 	// Fall back to remote address
 	host, _, err := net.SplitHostPort(r.RemoteAddr)
 	if err != nil {
 		return r.RemoteAddr
 	}
-	
+
 	return host
 }
 
@@ -168,17 +168,17 @@ func (a *Authenticator) extractAPIKey(r *http.Request) string {
 			return strings.TrimPrefix(auth, "ApiKey ")
 		}
 	}
-	
+
 	// Check X-API-Key header
 	if apiKey := r.Header.Get("X-API-Key"); apiKey != "" {
 		return apiKey
 	}
-	
+
 	// Check query parameter
 	if apiKey := r.URL.Query().Get("api_key"); apiKey != "" {
 		return apiKey
 	}
-	
+
 	return ""
 }
 
@@ -186,13 +186,13 @@ func (a *Authenticator) extractAPIKey(r *http.Request) string {
 func (a *Authenticator) validateAPIKey(apiKey string) (string, error) {
 	a.mu.RLock()
 	defer a.mu.RUnlock()
-	
+
 	for userID, key := range a.config.APIKeys {
 		if key == apiKey {
 			return userID, nil
 		}
 	}
-	
+
 	return "", fmt.Errorf("invalid API key")
 }
 
@@ -203,10 +203,10 @@ func (a *Authenticator) AddAPIKey(userID string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("failed to generate API key: %w", err)
 	}
-	
+
 	a.mu.Lock()
 	defer a.mu.Unlock()
-	
+
 	a.config.APIKeys[userID] = apiKey
 	return apiKey, nil
 }
@@ -215,7 +215,7 @@ func (a *Authenticator) AddAPIKey(userID string) (string, error) {
 func (a *Authenticator) RemoveAPIKey(userID string) error {
 	a.mu.Lock()
 	defer a.mu.Unlock()
-	
+
 	delete(a.config.APIKeys, userID)
 	return nil
 }
@@ -226,7 +226,7 @@ func (a *Authenticator) generateAPIKey() (string, error) {
 	if _, err := rand.Read(bytes); err != nil {
 		return "", err
 	}
-	
+
 	// Create a hash for better formatting
 	hash := sha256.Sum256(bytes)
 	return hex.EncodeToString(hash[:]), nil
@@ -253,16 +253,16 @@ func NewRateLimiter(maxRequests int, windowSize time.Duration) *RateLimiter {
 func (r *RateLimiter) CheckLimit(userID string) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
-	
+
 	now := time.Now()
 	windowStart := now.Add(-r.windowSize)
-	
+
 	// Get user's request history
 	userRequests, exists := r.requests[userID]
 	if !exists {
 		userRequests = []time.Time{}
 	}
-	
+
 	// Remove old requests outside the window
 	var validRequests []time.Time
 	for _, reqTime := range userRequests {
@@ -270,16 +270,16 @@ func (r *RateLimiter) CheckLimit(userID string) error {
 			validRequests = append(validRequests, reqTime)
 		}
 	}
-	
+
 	// Check if user has exceeded the limit
 	if len(validRequests) >= r.maxRequests {
 		return fmt.Errorf("rate limit exceeded: %d requests in %v", r.maxRequests, r.windowSize)
 	}
-	
+
 	// Add current request
 	validRequests = append(validRequests, now)
 	r.requests[userID] = validRequests
-	
+
 	return nil
 }
 
@@ -287,10 +287,10 @@ func (r *RateLimiter) CheckLimit(userID string) error {
 func (r *RateLimiter) GetRateLimitInfo(userID string) *RateLimitInfo {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
-	
+
 	now := time.Now()
 	windowStart := now.Add(-r.windowSize)
-	
+
 	userRequests, exists := r.requests[userID]
 	if !exists {
 		return &RateLimitInfo{
@@ -301,7 +301,7 @@ func (r *RateLimiter) GetRateLimitInfo(userID string) *RateLimitInfo {
 			ResetTime:   now.Add(r.windowSize),
 		}
 	}
-	
+
 	// Count valid requests
 	var validRequests int
 	for _, reqTime := range userRequests {
@@ -309,7 +309,7 @@ func (r *RateLimiter) GetRateLimitInfo(userID string) *RateLimitInfo {
 			validRequests++
 		}
 	}
-	
+
 	return &RateLimitInfo{
 		UserID:      userID,
 		Requests:    validRequests,
@@ -343,14 +343,14 @@ func (a *Authenticator) Middleware(next http.Handler) http.Handler {
 			next.ServeHTTP(w, r)
 			return
 		}
-		
+
 		// Authenticate request
 		authResult, err := a.AuthenticateRequest(r)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("Authentication failed: %v", err), http.StatusUnauthorized)
 			return
 		}
-		
+
 		// Add authentication result to request context
 		ctx := context.WithValue(r.Context(), contextKey("auth"), authResult)
 		next.ServeHTTP(w, r.WithContext(ctx))

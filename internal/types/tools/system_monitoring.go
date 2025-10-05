@@ -57,11 +57,11 @@ func (args *SystemMonitoringArgs) Validate() error {
 	if metric == "" {
 		return validation.NewMissingRequiredError("metric")
 	}
-	if metric != "processes" && metric != "disk_usage" && metric != "memory_usage" && 
-	   metric != "network" && metric != "uptime" {
+	if metric != "processes" && metric != "disk_usage" && metric != "memory_usage" &&
+		metric != "network" && metric != "uptime" {
 		return validation.NewInvalidFormatError("metric", "must be one of: processes, disk_usage, memory_usage, network, uptime")
 	}
-	
+
 	return nil
 }
 
@@ -71,5 +71,3 @@ func NewSystemMonitoringArgs(metric SystemMetric) *SystemMonitoringArgs {
 		Metric: metric,
 	}
 }
-
-

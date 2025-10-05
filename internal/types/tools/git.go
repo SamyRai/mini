@@ -23,17 +23,17 @@ func (args *GitCloneArgs) Validate() error {
 	if err := validation.StringRequired("repo", args.Repo); err != nil {
 		return err
 	}
-	
+
 	// Validate path
 	if err := validation.StringRequired("path", args.Path); err != nil {
 		return err
 	}
-	
+
 	// Validate path is safe
 	if err := validation.Path("path", args.Path); err != nil {
 		return err
 	}
-	
+
 	return nil
 }
 

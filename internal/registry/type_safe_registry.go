@@ -182,7 +182,7 @@ func (tsr *TypeSafeToolRegistry) CreateErrorResult(message string, details map[s
 		"message": message,
 		"details": details,
 	})
-	
+
 	return &mcp.CallToolResult{
 		IsError: true,
 		Content: []mcp.Content{&mcp.TextContent{Text: message}},
@@ -210,7 +210,7 @@ func (tsr *TypeSafeToolRegistry) CreateTextResult(text string) (*mcp.CallToolRes
 
 // ValidationError represents a validation error
 type ValidationError struct {
-	Code  string
+	Code    string
 	Message string
 }
 

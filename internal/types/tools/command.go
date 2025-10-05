@@ -30,7 +30,7 @@ type CommandArgs struct {
 	// Command is the shell command to execute
 	// Must be in the allowed command list for security
 	Command string `json:"command"`
-	
+
 	// Timeout is the maximum execution time in seconds (optional)
 	// Default: 30 seconds, Maximum: 300 seconds (5 minutes)
 	Timeout int `json:"timeout,omitempty"`
@@ -42,14 +42,14 @@ func (args *CommandArgs) Validate() error {
 	if err := validation.StringRequired("command", args.Command); err != nil {
 		return err
 	}
-	
+
 	// Validate timeout if provided
 	if args.Timeout > 0 {
 		if err := validation.Timeout("timeout", args.Timeout); err != nil {
 			return err
 		}
 	}
-	
+
 	return nil
 }
 
@@ -58,10 +58,10 @@ func NewCommandArgs(command string, timeout ...int) *CommandArgs {
 	args := &CommandArgs{
 		Command: command,
 	}
-	
+
 	if len(timeout) > 0 {
 		args.Timeout = timeout[0]
 	}
-	
+
 	return args
 }

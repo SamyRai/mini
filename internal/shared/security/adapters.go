@@ -93,7 +93,7 @@ func (a *FileSecurityAdapter) ListDirectory(path string) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	
+
 	var files []string
 	for _, entry := range entries {
 		files = append(files, entry.Name())
@@ -111,7 +111,7 @@ func containsDangerousPatterns(path string) bool {
 	dangerousPatterns := []string{
 		"..", "~", "/etc", "/var", "/usr", "/bin", "/sbin", "/sys", "/proc",
 	}
-	
+
 	for _, pattern := range dangerousPatterns {
 		if contains(path, pattern) {
 			return true
@@ -125,7 +125,7 @@ func isSystemPath(path string) bool {
 	systemPaths := []string{
 		"/etc", "/var", "/usr", "/bin", "/sbin", "/sys", "/proc", "/dev",
 	}
-	
+
 	for _, sysPath := range systemPaths {
 		if startsWith(path, sysPath) {
 			return true
@@ -136,9 +136,9 @@ func isSystemPath(path string) bool {
 
 // contains checks if a string contains a substring
 func contains(s, substr string) bool {
-	return len(s) >= len(substr) && (s == substr || (len(s) > len(substr) && 
-		(s[:len(substr)] == substr || s[len(s)-len(substr):] == substr || 
-		containsSubstring(s, substr))))
+	return len(s) >= len(substr) && (s == substr || (len(s) > len(substr) &&
+		(s[:len(substr)] == substr || s[len(s)-len(substr):] == substr ||
+			containsSubstring(s, substr))))
 }
 
 // startsWith checks if a string starts with a prefix

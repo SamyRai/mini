@@ -14,7 +14,9 @@ func NewNumericValidator() *NumericValidator {
 }
 
 // Range creates a range validator for numeric types
-func Range[T interface{ ~int | ~int8 | ~int16 | ~int32 | ~int64 | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~float32 | ~float64 }](min, max T) Validator[T] {
+func Range[T interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~float32 | ~float64
+}](min, max T) Validator[T] {
 	return func(field string, value T) error {
 		if value < min || value > max {
 			return ValidationError{Field: field, Message: fmt.Sprintf("value must be between %v and %v", min, max), Value: value}

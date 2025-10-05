@@ -7,9 +7,9 @@ import (
 
 // ValidationFactory provides a factory for creating validators
 type ValidationFactory struct {
-	stringValidator *StringValidator
+	stringValidator  *StringValidator
 	numericValidator *NumericValidator
-	sliceValidator *SliceValidator
+	sliceValidator   *SliceValidator
 }
 
 // NewValidationFactory creates a new validation factory
@@ -17,7 +17,7 @@ func NewValidationFactory() *ValidationFactory {
 	return &ValidationFactory{
 		stringValidator:  NewStringValidator(),
 		numericValidator: NewNumericValidator(),
-		sliceValidator:    NewSliceValidator(),
+		sliceValidator:   NewSliceValidator(),
 	}
 }
 

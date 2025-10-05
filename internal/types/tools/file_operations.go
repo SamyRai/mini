@@ -47,12 +47,12 @@ type FileOperationsArgs struct {
 	// Operation is the file operation to perform
 	// Must be one of: read, write, list, delete
 	Operation FileOperation `json:"operation"`
-	
+
 	// Path is the file or directory path
 	// Supports relative and absolute paths
 	// Restricted from accessing system directories
 	Path string `json:"path"`
-	
+
 	// Content is the content to write (for write operations)
 	// Required when operation is "write"
 	// Can be any string content (text, JSON, configuration, etc.)
@@ -65,16 +65,16 @@ func (args *FileOperationsArgs) Validate() error {
 	if string(args.Operation) == "" {
 		return validation.NewMissingRequiredError("operation")
 	}
-	if string(args.Operation) != "read" && string(args.Operation) != "write" && 
-	   string(args.Operation) != "list" && string(args.Operation) != "delete" {
+	if string(args.Operation) != "read" && string(args.Operation) != "write" &&
+		string(args.Operation) != "list" && string(args.Operation) != "delete" {
 		return validation.NewInvalidFormatError("operation", "must be 'read', 'write', 'list', or 'delete'")
 	}
-	
+
 	// Validate path
 	if err := validation.StringPath("path", args.Path); err != nil {
 		return err
 	}
-	
+
 	// Validate content for write operations
 	if args.Operation == FileOpWrite {
 		if args.Content == "" {
@@ -84,7 +84,7 @@ func (args *FileOperationsArgs) Validate() error {
 			return validation.NewInvalidFormatError("content", "content too large (max 1MB)")
 		}
 	}
-	
+
 	return nil
 }
 
@@ -94,12 +94,10 @@ func NewFileOperationsArgs(operation FileOperation, path string, content ...stri
 		Operation: operation,
 		Path:      path,
 	}
-	
+
 	if len(content) > 0 {
 		args.Content = content[0]
 	}
-	
+
 	return args
 }
-
-

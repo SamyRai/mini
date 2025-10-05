@@ -44,16 +44,16 @@ func (ea *ErrorAggregator) ToCombinedError() *ErrorResponse {
 	if len(ea.errors) == 0 {
 		return nil
 	}
-	
+
 	if len(ea.errors) == 1 {
 		return ea.errors[0]
 	}
-	
+
 	// Create a combined error
 	combined := NewErrorResponse(ErrorCodeInternalError, fmt.Sprintf("Multiple errors occurred (%d total)", len(ea.errors)))
 	combined.Details["error_count"] = len(ea.errors)
 	combined.Details["errors"] = ea.errors
-	
+
 	return combined
 }
 
@@ -98,15 +98,15 @@ func (ec *ErrorCollector) GetCombinedError() error {
 	if len(ec.errors) == 0 {
 		return nil
 	}
-	
+
 	if len(ec.errors) == 1 {
 		return ec.errors[0]
 	}
-	
+
 	// Create a combined error
 	combined := NewErrorResponse(ErrorCodeInternalError, fmt.Sprintf("Multiple errors occurred (%d total)", len(ec.errors)))
 	combined.Details["error_count"] = len(ec.errors)
 	combined.Details["errors"] = ec.errors
-	
+
 	return combined
 }

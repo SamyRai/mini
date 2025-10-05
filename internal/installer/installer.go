@@ -75,7 +75,7 @@ func (i *Installer) Build() error {
 // Install installs the binary to the system PATH
 func (i *Installer) Install() error {
 	logger := logging.GetGlobalLogger()
-	
+
 	// Check if binary exists
 	binaryPath := filepath.Join(i.projectRoot, i.binaryName)
 	if _, err := os.Stat(binaryPath); os.IsNotExist(err) {
@@ -173,7 +173,7 @@ func (i *Installer) UpdateVSCodeSettings() error {
 		logger.Info("VS Code settings.json not found, creating new one", map[string]any{
 			"settings_path": settingsPath,
 		})
-		
+
 		// Create directory if it doesn't exist
 		if err := os.MkdirAll(filepath.Dir(settingsPath), 0755); err != nil {
 			return fmt.Errorf("failed to create VS Code settings directory: %w", err)
@@ -249,7 +249,7 @@ func (i *Installer) UpdateCursorSettings() error {
 		logger.Info("Cursor settings.json not found, creating new one", map[string]any{
 			"settings_path": settingsPath,
 		})
-		
+
 		// Create directory if it doesn't exist
 		if err := os.MkdirAll(filepath.Dir(settingsPath), 0755); err != nil {
 			return fmt.Errorf("failed to create Cursor settings directory: %w", err)

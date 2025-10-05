@@ -26,13 +26,13 @@ func (e SecurityError) Unwrap() error {
 
 // Error codes
 const (
-	ErrCodeCommandNotAllowed    = "COMMAND_NOT_ALLOWED"
-	ErrCodeDangerousPattern     = "DANGEROUS_PATTERN"
-	ErrCodePathTraversal        = "PATH_TRAVERSAL"
-	ErrCodePathBlocked         = "PATH_BLOCKED"
-	ErrCodePathNotAllowed      = "PATH_NOT_ALLOWED"
-	ErrCodeInvalidInput        = "INVALID_INPUT"
-	ErrCodeCommandTooLong      = "COMMAND_TOO_LONG"
+	ErrCodeCommandNotAllowed = "COMMAND_NOT_ALLOWED"
+	ErrCodeDangerousPattern  = "DANGEROUS_PATTERN"
+	ErrCodePathTraversal     = "PATH_TRAVERSAL"
+	ErrCodePathBlocked       = "PATH_BLOCKED"
+	ErrCodePathNotAllowed    = "PATH_NOT_ALLOWED"
+	ErrCodeInvalidInput      = "INVALID_INPUT"
+	ErrCodeCommandTooLong    = "COMMAND_TOO_LONG"
 )
 
 // CommandValidator interface for command validation

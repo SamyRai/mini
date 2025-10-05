@@ -76,7 +76,7 @@ func getDockerInfo() (any, error) {
 	// dockerInfo := resources.NewDockerInfo()
 	// dockerInfo.Version = ...
 	// return dockerInfo, nil
-	
+
 	return info, nil
 }
 
@@ -84,25 +84,25 @@ func getDockerInfo() (any, error) {
 func getCommandDocs() (resources.CommandDocCollection, error) {
 	// Create a new CommandDocCollection
 	docs := resources.NewCommandDocCollection()
-	
+
 	// Add documentation for common commands
 	docs.Add("docker", resources.CommandDoc{
 		Description: "Docker container management",
 		Usage:       "docker [OPTIONS] COMMAND",
 		URL:         "https://docs.docker.com/engine/reference/commandline/cli/",
 	})
-	
+
 	docs.Add("git", resources.CommandDoc{
 		Description: "Distributed version control system",
 		Usage:       "git [--version] [--help] [-C <path>] [-c <name>=<value>] [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path] [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare] [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>] <command> [<args>]",
 		URL:         "https://git-scm.com/docs",
 	})
-	
+
 	docs.Add("kubectl", resources.CommandDoc{
 		Description: "Kubernetes command line tool",
 		Usage:       "kubectl [command] [TYPE] [NAME] [flags]",
 		URL:         "https://kubernetes.io/docs/reference/kubectl/",
 	})
-	
+
 	return docs, nil
 }

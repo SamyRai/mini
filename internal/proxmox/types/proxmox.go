@@ -56,23 +56,23 @@ type VMStatus struct {
 
 // VMConfig represents the configuration of a virtual machine
 type VMConfig struct {
-	VMID         int                    `json:"vmid"`
-	Name         string                 `json:"name"`
-	Memory       int                    `json:"memory"`
-	Cores        int                    `json:"cores"`
-	OSType       string                 `json:"ostype"`
-	SCSIHw       string                 `json:"scsihw"`
-	Net0         string                 `json:"net0"`
-	Agent        string                 `json:"agent"`
-	VGA          string                 `json:"vga"`
-	Boot         string                 `json:"boot"`
-	BootDisk     string                 `json:"bootdisk"`
-	OnBoot       bool                   `json:"onboot"`
-	Start        bool                   `json:"start"`
-	IPConfig0    string                 `json:"ipconfig0,omitempty"`
-	Nameserver   string                 `json:"nameserver,omitempty"`
-	SearchDomain string                 `json:"searchdomain,omitempty"`
-	Extra        map[string]string      `json:"-"`
+	VMID         int               `json:"vmid"`
+	Name         string            `json:"name"`
+	Memory       int               `json:"memory"`
+	Cores        int               `json:"cores"`
+	OSType       string            `json:"ostype"`
+	SCSIHw       string            `json:"scsihw"`
+	Net0         string            `json:"net0"`
+	Agent        string            `json:"agent"`
+	VGA          string            `json:"vga"`
+	Boot         string            `json:"boot"`
+	BootDisk     string            `json:"bootdisk"`
+	OnBoot       bool              `json:"onboot"`
+	Start        bool              `json:"start"`
+	IPConfig0    string            `json:"ipconfig0,omitempty"`
+	Nameserver   string            `json:"nameserver,omitempty"`
+	SearchDomain string            `json:"searchdomain,omitempty"`
+	Extra        map[string]string `json:"-"`
 }
 
 // UnmarshalJSON implements custom JSON unmarshaling for VMConfig with type safety
@@ -264,9 +264,9 @@ type TemplateDeployConfig struct {
 
 // CustomDeployConfig represents configuration for custom deployment
 type CustomDeployConfig struct {
-	Name     string                 `json:"name"`
-	IP       string                 `json:"ip"`
-	Cores    int                    `json:"cores"`
+	Name     string            `json:"name"`
+	IP       string            `json:"ip"`
+	Cores    int               `json:"cores"`
 	Memory   int               `json:"memory"`
 	Disk     int               `json:"disk"`
 	Config   map[string]string `json:"config"`

@@ -5,20 +5,20 @@ import (
 	"os"
 	"path/filepath"
 
-	"mini-mcp/internal/proxmox/types"
 	"gopkg.in/yaml.v3"
+	"mini-mcp/internal/proxmox/types"
 )
 
 // ProxmoxConfig holds Proxmox configuration
 type ProxmoxConfig struct {
-	Host      string `yaml:"host" json:"host"`
-	User      string `yaml:"user" json:"user"`
-	Password  string `yaml:"password" json:"password"`
-	TokenName string `yaml:"token_name" json:"token_name"`
+	Host       string `yaml:"host" json:"host"`
+	User       string `yaml:"user" json:"user"`
+	Password   string `yaml:"password" json:"password"`
+	TokenName  string `yaml:"token_name" json:"token_name"`
 	TokenValue string `yaml:"token_value" json:"token_value"`
-	VerifySSL bool   `yaml:"verify_ssl" json:"verify_ssl"`
-	Timeout   int    `yaml:"timeout" json:"timeout"`
-	Node      string `yaml:"node" json:"node"`
+	VerifySSL  bool   `yaml:"verify_ssl" json:"verify_ssl"`
+	Timeout    int    `yaml:"timeout" json:"timeout"`
+	Node       string `yaml:"node" json:"node"`
 }
 
 // LoadProxmoxConfig loads Proxmox configuration from file and environment variables
@@ -151,7 +151,7 @@ func GetConfigPath() string {
 	if _, err := os.Stat("proxmox-auth.yaml"); err == nil {
 		return "proxmox-auth.yaml"
 	}
-	
+
 	// Check for config in home directory
 	homeDir, err := os.UserHomeDir()
 	if err == nil {
@@ -160,7 +160,7 @@ func GetConfigPath() string {
 			return configPath
 		}
 	}
-	
+
 	// Default to current directory
 	return "proxmox-auth.yaml"
 }

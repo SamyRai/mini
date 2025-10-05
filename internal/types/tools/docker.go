@@ -29,12 +29,12 @@ func (args *DockerComposeUpArgs) Validate() error {
 	if err := validation.StringRequired("path", args.Path); err != nil {
 		return err
 	}
-	
+
 	// Validate path is safe
 	if err := validation.Path("path", args.Path); err != nil {
 		return err
 	}
-	
+
 	return nil
 }
 
@@ -71,12 +71,12 @@ func (args *DockerComposeDownArgs) Validate() error {
 	if err := validation.StringRequired("path", args.Path); err != nil {
 		return err
 	}
-	
+
 	// Validate path is safe
 	if err := validation.Path("path", args.Path); err != nil {
 		return err
 	}
-	
+
 	return nil
 }
 

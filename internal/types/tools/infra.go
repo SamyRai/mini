@@ -339,29 +339,29 @@ func NewServiceInfoArgs(includeSystemd, includeLogs, includeStatus bool, filterS
 type InfrastructureInfoArgs struct {
 	// CollectionLevel determines how much detail to collect (basic, standard, detailed, comprehensive)
 	CollectionLevel string `json:"collection_level,omitempty"`
-	
+
 	// Include flags for different types of information
-	IncludeSystem bool `json:"include_system"`
-	IncludeProcesses bool `json:"include_processes"`
-	IncludeNetwork bool `json:"include_network"`
-	IncludeServices bool `json:"include_services"`
-	IncludeDocker bool `json:"include_docker"`
+	IncludeSystem     bool `json:"include_system"`
+	IncludeProcesses  bool `json:"include_processes"`
+	IncludeNetwork    bool `json:"include_network"`
+	IncludeServices   bool `json:"include_services"`
+	IncludeDocker     bool `json:"include_docker"`
 	IncludeKubernetes bool `json:"include_kubernetes"`
-	IncludeCloud bool `json:"include_cloud"`
-	IncludeProxmox bool `json:"include_proxmox"`
-	IncludeCeph bool `json:"include_ceph"`
-	IncludeNomad bool `json:"include_nomad"`
-	
+	IncludeCloud      bool `json:"include_cloud"`
+	IncludeProxmox    bool `json:"include_proxmox"`
+	IncludeCeph       bool `json:"include_ceph"`
+	IncludeNomad      bool `json:"include_nomad"`
+
 	// IncludeAll is a shortcut to include all available information
 	IncludeAll bool `json:"include_all"`
-	
+
 	// TimeInterval is the time interval in seconds for metrics collection
 	TimeInterval int `json:"time_interval,omitempty"`
-	
+
 	// Authentication details for various services
-	ProxmoxAuth *ProxmoxArgs `json:"proxmox_auth,omitempty"`
+	ProxmoxAuth    *ProxmoxArgs        `json:"proxmox_auth,omitempty"`
 	KubernetesAuth *KubernetesInfoArgs `json:"kubernetes_auth,omitempty"`
-	CloudAuth *CloudInfoArgs `json:"cloud_auth,omitempty"`
+	CloudAuth      *CloudInfoArgs      `json:"cloud_auth,omitempty"`
 }
 
 // Validate checks if the InfrastructureInfo arguments are valid.
@@ -370,7 +370,7 @@ func (args *InfrastructureInfoArgs) Validate() error {
 	if args.CollectionLevel == "" {
 		args.CollectionLevel = "standard"
 	}
-	
+
 	// If IncludeAll is set, enable all include flags
 	if args.IncludeAll {
 		args.IncludeSystem = true
@@ -384,37 +384,37 @@ func (args *InfrastructureInfoArgs) Validate() error {
 		args.IncludeCeph = true
 		args.IncludeNomad = true
 	}
-	
+
 	// Default to at least include system info
-	if !args.IncludeSystem && !args.IncludeProcesses && !args.IncludeNetwork && 
-	   !args.IncludeServices && !args.IncludeDocker && !args.IncludeKubernetes && 
-	   !args.IncludeCloud && !args.IncludeProxmox && !args.IncludeCeph && !args.IncludeNomad {
+	if !args.IncludeSystem && !args.IncludeProcesses && !args.IncludeNetwork &&
+		!args.IncludeServices && !args.IncludeDocker && !args.IncludeKubernetes &&
+		!args.IncludeCloud && !args.IncludeProxmox && !args.IncludeCeph && !args.IncludeNomad {
 		args.IncludeSystem = true
 	}
-	
+
 	// Set default time interval
 	if args.TimeInterval <= 0 {
 		args.TimeInterval = 5
 	}
-	
+
 	return nil
 }
 
 // NewInfrastructureInfoArgs creates a new InfrastructureInfoArgs with sensible defaults.
 func NewInfrastructureInfoArgs() *InfrastructureInfoArgs {
 	return &InfrastructureInfoArgs{
-		CollectionLevel:  "standard",
-		IncludeSystem:    true,
-		IncludeProcesses: true,
-		IncludeNetwork:   true,
-		IncludeServices:  false,
-		IncludeDocker:    false,
+		CollectionLevel:   "standard",
+		IncludeSystem:     true,
+		IncludeProcesses:  true,
+		IncludeNetwork:    true,
+		IncludeServices:   false,
+		IncludeDocker:     false,
 		IncludeKubernetes: false,
-		IncludeCloud:     false,
-		IncludeProxmox:   false,
-		IncludeCeph:      false,
-		IncludeNomad:     false,
-		IncludeAll:       false,
-		TimeInterval:     5,
+		IncludeCloud:      false,
+		IncludeProxmox:    false,
+		IncludeCeph:       false,
+		IncludeNomad:      false,
+		IncludeAll:        false,
+		TimeInterval:      5,
 	}
 }

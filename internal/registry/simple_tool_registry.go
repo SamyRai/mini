@@ -94,7 +94,7 @@ func (str *SimpleToolRegistry) CreateErrorResult(message string, details map[str
 		"message": message,
 		"details": details,
 	})
-	
+
 	return &mcp.CallToolResult{
 		IsError: true,
 		Content: []mcp.Content{&mcp.TextContent{Text: message}},

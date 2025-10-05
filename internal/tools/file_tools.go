@@ -93,7 +93,7 @@ func RegisterFileTools(server *mcp.Server, toolRegistry *registry.TypeSafeToolRe
 		WithValidator(func(args FileListArgs) error {
 			return args.Validate()
 		})
-		
+
 	if err := lsBuilder.Register(); err != nil {
 		// Log error but continue - tool registration failure should not crash the server
 		return
@@ -120,7 +120,7 @@ func RegisterFileTools(server *mcp.Server, toolRegistry *registry.TypeSafeToolRe
 		WithValidator(func(args FileReadArgs) error {
 			return args.Validate()
 		})
-		
+
 	if err := catBuilder.Register(); err != nil {
 		// Log error but continue - tool registration failure should not crash the server
 		return
@@ -148,7 +148,7 @@ func RegisterFileTools(server *mcp.Server, toolRegistry *registry.TypeSafeToolRe
 		WithValidator(func(args FileWriteArgs) error {
 			return args.Validate()
 		})
-		
+
 	if err := writeBuilder.Register(); err != nil {
 		// Log error but continue - tool registration failure should not crash the server
 		return
@@ -175,7 +175,7 @@ func RegisterFileTools(server *mcp.Server, toolRegistry *registry.TypeSafeToolRe
 		WithValidator(func(args FileDeleteArgs) error {
 			return args.Validate()
 		})
-		
+
 	if err := rmBuilder.Register(); err != nil {
 		// Log error but continue - tool registration failure should not crash the server
 		return

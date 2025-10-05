@@ -25,31 +25,31 @@ const (
 
 // CheckResult represents the result of a health check
 type CheckResult struct {
-	Status    HealthStatus `json:"status"`
-	Message   string       `json:"message"`
-	LastCheck time.Time    `json:"last_check"`
-	Duration  time.Duration `json:"duration"`
+	Status    HealthStatus   `json:"status"`
+	Message   string         `json:"message"`
+	LastCheck time.Time      `json:"last_check"`
+	Duration  time.Duration  `json:"duration"`
 	Details   map[string]any `json:"details,omitempty"`
 }
 
 // DependencyStatus represents the status of a dependency
 type DependencyStatus struct {
-	Name      string       `json:"name"`
-	Status    HealthStatus `json:"status"`
-	Message   string       `json:"message"`
-	LastCheck time.Time    `json:"last_check"`
+	Name      string        `json:"name"`
+	Status    HealthStatus  `json:"status"`
+	Message   string        `json:"message"`
+	LastCheck time.Time     `json:"last_check"`
 	Duration  time.Duration `json:"duration"`
-	Critical  bool         `json:"critical"`
+	Critical  bool          `json:"critical"`
 }
 
 // HealthStatus represents the overall health status
 type HealthInfo struct {
-	Status       HealthStatus         `json:"status"`
+	Status       HealthStatus           `json:"status"`
 	Checks       map[string]CheckResult `json:"checks"`
-	Dependencies []DependencyStatus   `json:"dependencies"`
-	Timestamp    time.Time            `json:"timestamp"`
-	Version      string               `json:"version"`
-	Uptime       time.Duration        `json:"uptime"`
+	Dependencies []DependencyStatus     `json:"dependencies"`
+	Timestamp    time.Time              `json:"timestamp"`
+	Version      string                 `json:"version"`
+	Uptime       time.Duration          `json:"uptime"`
 }
 
 // HealthChecker provides health checking functionality
@@ -86,7 +86,7 @@ func NewHealthChecker(version string) *HealthChecker {
 func (h *HealthChecker) AddCheck(name string, check HealthCheck) {
 	h.mu.Lock()
 	defer h.mu.Unlock()
-	
+
 	h.checks[name] = check
 }
 
@@ -94,7 +94,7 @@ func (h *HealthChecker) AddCheck(name string, check HealthCheck) {
 func (h *HealthChecker) AddDependency(name string, check HealthCheck, critical bool, interval time.Duration) {
 	h.mu.Lock()
 	defer h.mu.Unlock()
-	
+
 	h.dependencies[name] = Dependency{
 		Name:     name,
 		Check:    check,
@@ -107,10 +107,10 @@ func (h *HealthChecker) AddDependency(name string, check HealthCheck, critical b
 func (h *HealthChecker) CheckHealth(ctx context.Context) *HealthInfo {
 	h.mu.RLock()
 	defer h.mu.RUnlock()
-	
+
 	checks := make(map[string]CheckResult)
 	dependencies := make([]DependencyStatus, 0)
-	
+
 	// Perform regular health checks
 	for name, check := range h.checks {
 		start := time.Now()
@@ -119,7 +119,7 @@ func (h *HealthChecker) CheckHealth(ctx context.Context) *HealthInfo {
 		result.Duration = time.Since(start)
 		checks[name] = result
 	}
-	
+
 	// Perform dependency checks
 	for name, dep := range h.dependencies {
 		start := time.Now()
@@ -134,10 +134,10 @@ func (h *HealthChecker) CheckHealth(ctx context.Context) *HealthInfo {
 		}
 		dependencies = append(dependencies, dependencyStatus)
 	}
-	
+
 	// Determine overall status
 	status := h.determineOverallStatus(checks, dependencies)
-	
+
 	return &HealthInfo{
 		Status:       status,
 		Checks:       checks,
@@ -156,11 +156,11 @@ func (h *HealthChecker) determineOverallStatus(checks map[string]CheckResult, de
 			return HealthStatusUnhealthy
 		}
 	}
-	
+
 	// Count unhealthy and degraded checks
 	unhealthyCount := 0
 	degradedCount := 0
-	
+
 	for _, check := range checks {
 		switch check.Status {
 		case HealthStatusUnhealthy:
@@ -169,14 +169,14 @@ func (h *HealthChecker) determineOverallStatus(checks map[string]CheckResult, de
 			degradedCount++
 		}
 	}
-	
+
 	// Determine overall status
 	if unhealthyCount > 0 {
 		return HealthStatusUnhealthy
 	} else if degradedCount > 0 {
 		return HealthStatusDegraded
 	}
-	
+
 	return HealthStatusHealthy
 }
 
@@ -184,7 +184,7 @@ func (h *HealthChecker) determineOverallStatus(checks map[string]CheckResult, de
 func (h *HealthChecker) HTTPHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
-		
+
 		// Set timeout for health checks
 		timeout := 30 * time.Second
 		if r.URL.Query().Get("timeout") != "" {
@@ -192,13 +192,13 @@ func (h *HealthChecker) HTTPHandler() http.HandlerFunc {
 				timeout = t
 			}
 		}
-		
+
 		ctx, cancel := context.WithTimeout(ctx, timeout)
 		defer cancel()
-		
+
 		// Perform health check
 		health := h.CheckHealth(ctx)
-		
+
 		// Set response status code
 		switch health.Status {
 		case HealthStatusHealthy:
@@ -208,17 +208,17 @@ func (h *HealthChecker) HTTPHandler() http.HandlerFunc {
 		case HealthStatusUnhealthy:
 			w.WriteHeader(http.StatusServiceUnavailable)
 		}
-		
+
 		// Set content type
 		w.Header().Set("Content-Type", "application/json")
-		
+
 		// Marshal and write response
 		data, err := json.MarshalIndent(health, "", "  ")
 		if err != nil {
 			http.Error(w, "Failed to marshal health status", http.StatusInternalServerError)
 			return
 		}
-		
+
 		if _, err := w.Write(data); err != nil {
 			slog.Error("Failed to write health response", "error", err)
 		}
@@ -229,7 +229,7 @@ func (h *HealthChecker) HTTPHandler() http.HandlerFunc {
 func (h *HealthChecker) ReadyHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
-		
+
 		// Set timeout for readiness checks
 		timeout := 10 * time.Second
 		if r.URL.Query().Get("timeout") != "" {
@@ -237,13 +237,13 @@ func (h *HealthChecker) ReadyHandler() http.HandlerFunc {
 				timeout = t
 			}
 		}
-		
+
 		ctx, cancel := context.WithTimeout(ctx, timeout)
 		defer cancel()
-		
+
 		// Perform health check
 		health := h.CheckHealth(ctx)
-		
+
 		// Only return 200 if healthy
 		if health.Status == HealthStatusHealthy {
 			w.WriteHeader(http.StatusOK)
@@ -275,7 +275,7 @@ func PingCheck() HealthCheck {
 func DiskSpaceCheck(path string, minSpaceGB float64) HealthCheck {
 	return func(ctx context.Context) CheckResult {
 		start := time.Now()
-		
+
 		// Check actual disk space using syscall.Statfs
 		var stat syscall.Statfs_t
 		err := syscall.Statfs(path, &stat)
@@ -284,36 +284,36 @@ func DiskSpaceCheck(path string, minSpaceGB float64) HealthCheck {
 				Status:  HealthStatusUnhealthy,
 				Message: fmt.Sprintf("Failed to check disk space for %s: %v", path, err),
 				Details: map[string]any{
-					"path":        path,
+					"path":         path,
 					"min_space_gb": minSpaceGB,
-					"duration":    time.Since(start).String(),
+					"duration":     time.Since(start).String(),
 				},
 			}
 		}
-		
+
 		// Calculate available space in GB
 		totalBytes := stat.Blocks * uint64(stat.Bsize)
 		freeBytes := stat.Bavail * uint64(stat.Bsize)
 		availableGB := float64(freeBytes) / (1024 * 1024 * 1024)
-		
+
 		status := HealthStatusHealthy
 		message := fmt.Sprintf("Disk space is sufficient: %.2f GB available", availableGB)
-		
+
 		if availableGB < minSpaceGB {
 			status = HealthStatusUnhealthy
 			message = fmt.Sprintf("Insufficient disk space: %.2f GB available, %.2f GB required", availableGB, minSpaceGB)
 		}
-		
+
 		return CheckResult{
 			Status:  status,
 			Message: message,
 			Details: map[string]any{
-				"path":           path,
-				"min_space_gb":   minSpaceGB,
-				"available_gb":  availableGB,
-				"total_bytes":    totalBytes,
-				"free_bytes":    freeBytes,
-				"duration":      time.Since(start).String(),
+				"path":         path,
+				"min_space_gb": minSpaceGB,
+				"available_gb": availableGB,
+				"total_bytes":  totalBytes,
+				"free_bytes":   freeBytes,
+				"duration":     time.Since(start).String(),
 			},
 		}
 	}
@@ -323,33 +323,33 @@ func DiskSpaceCheck(path string, minSpaceGB float64) HealthCheck {
 func MemoryCheck(maxUsagePercent float64) HealthCheck {
 	return func(ctx context.Context) CheckResult {
 		start := time.Now()
-		
+
 		// Get actual memory usage
 		var memStats runtime.MemStats
 		runtime.ReadMemStats(&memStats)
-		
+
 		// Calculate memory usage percentage
 		usagePercent := float64(memStats.Alloc) / float64(memStats.Sys) * 100
-		
+
 		status := HealthStatusHealthy
 		message := fmt.Sprintf("Memory usage is within limits: %.2f%% used", usagePercent)
-		
+
 		if usagePercent > maxUsagePercent {
 			status = HealthStatusDegraded
 			message = fmt.Sprintf("High memory usage: %.2f%% used (limit: %.2f%%)", usagePercent, maxUsagePercent)
 		}
-		
+
 		return CheckResult{
 			Status:  status,
 			Message: message,
 			Details: map[string]any{
-				"max_usage_percent": maxUsagePercent,
+				"max_usage_percent":     maxUsagePercent,
 				"current_usage_percent": usagePercent,
-				"alloc_bytes":        memStats.Alloc,
-				"sys_bytes":          memStats.Sys,
-				"total_alloc_bytes":  memStats.TotalAlloc,
-				"num_gc":             memStats.NumGC,
-				"duration":          time.Since(start).String(),
+				"alloc_bytes":           memStats.Alloc,
+				"sys_bytes":             memStats.Sys,
+				"total_alloc_bytes":     memStats.TotalAlloc,
+				"num_gc":                memStats.NumGC,
+				"duration":              time.Since(start).String(),
 			},
 		}
 	}
@@ -361,7 +361,7 @@ func DatabaseCheck(checkFunc func(ctx context.Context) error) HealthCheck {
 		start := time.Now()
 		err := checkFunc(ctx)
 		duration := time.Since(start)
-		
+
 		if err != nil {
 			return CheckResult{
 				Status:  HealthStatusUnhealthy,
@@ -371,7 +371,7 @@ func DatabaseCheck(checkFunc func(ctx context.Context) error) HealthCheck {
 				},
 			}
 		}
-		
+
 		return CheckResult{
 			Status:  HealthStatusHealthy,
 			Message: "Database is accessible",
@@ -387,7 +387,7 @@ func HTTPCheck(url string, timeout time.Duration) HealthCheck {
 	return func(ctx context.Context) CheckResult {
 		ctx, cancel := context.WithTimeout(ctx, timeout)
 		defer cancel()
-		
+
 		req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 		if err != nil {
 			return CheckResult{
@@ -395,11 +395,11 @@ func HTTPCheck(url string, timeout time.Duration) HealthCheck {
 				Message: fmt.Sprintf("Failed to create request: %v", err),
 			}
 		}
-		
+
 		start := time.Now()
 		resp, err := http.DefaultClient.Do(req)
 		duration := time.Since(start)
-		
+
 		if err != nil {
 			return CheckResult{
 				Status:  HealthStatusUnhealthy,
@@ -415,19 +415,19 @@ func HTTPCheck(url string, timeout time.Duration) HealthCheck {
 				slog.Error("Failed to close response body", "error", err)
 			}
 		}()
-		
+
 		if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 			return CheckResult{
 				Status:  HealthStatusHealthy,
 				Message: fmt.Sprintf("HTTP check successful: %d", resp.StatusCode),
 				Details: map[string]any{
-					"url":           url,
-					"status_code":   resp.StatusCode,
-					"duration":      duration.String(),
+					"url":         url,
+					"status_code": resp.StatusCode,
+					"duration":    duration.String(),
 				},
 			}
 		}
-		
+
 		return CheckResult{
 			Status:  HealthStatusUnhealthy,
 			Message: fmt.Sprintf("HTTP check failed with status: %d", resp.StatusCode),
@@ -442,19 +442,19 @@ func HTTPCheck(url string, timeout time.Duration) HealthCheck {
 
 // FallbackConfig provides fallback configuration for health checks
 type FallbackConfig struct {
-	PrimaryTool     string `json:"primary_tool"`
-	FallbackTool    string `json:"fallback_tool"`
+	PrimaryTool       string `json:"primary_tool"`
+	FallbackTool      string `json:"fallback_tool"`
 	FallbackCondition string `json:"fallback_condition"`
-	DegradedMode    bool   `json:"degraded_mode"`
+	DegradedMode      bool   `json:"degraded_mode"`
 }
 
 // NewFallbackConfig creates a new fallback configuration
 func NewFallbackConfig(primary, fallback, condition string) *FallbackConfig {
 	return &FallbackConfig{
-		PrimaryTool:      primary,
-		FallbackTool:     fallback,
+		PrimaryTool:       primary,
+		FallbackTool:      fallback,
 		FallbackCondition: condition,
-		DegradedMode:     true,
+		DegradedMode:      true,
 	}
 }
 
@@ -504,12 +504,12 @@ func SystemResourceCheck() HealthCheck {
 			Status:  status,
 			Message: message,
 			Details: map[string]any{
-				"memory_alloc":     fmt.Sprintf("%d bytes", memStats.Alloc),
-				"memory_sys":       fmt.Sprintf("%d bytes", memStats.Sys),
-				"goroutines":       goroutines,
-				"disk_usage":       fmt.Sprintf("%.2f%%", diskUsage),
-				"disk_usage_raw":   diskUsage,
-				"duration":         time.Since(start).String(),
+				"memory_alloc":   fmt.Sprintf("%d bytes", memStats.Alloc),
+				"memory_sys":     fmt.Sprintf("%d bytes", memStats.Sys),
+				"goroutines":     goroutines,
+				"disk_usage":     fmt.Sprintf("%.2f%%", diskUsage),
+				"disk_usage_raw": diskUsage,
+				"duration":       time.Since(start).String(),
 			},
 		}
 	}

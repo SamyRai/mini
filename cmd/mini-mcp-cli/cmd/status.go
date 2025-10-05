@@ -41,7 +41,7 @@ Examples:
 		fmt.Printf("Is Installed:    %v\n", status["is_installed"])
 		fmt.Printf("Project Root:    %s\n", status["project_root"])
 		fmt.Printf("Binary Exists:   %v\n", status["binary_exists"])
-		
+
 		if status["binary_path"] != nil {
 			fmt.Printf("Binary Path:     %s\n", status["binary_path"])
 		}

@@ -64,8 +64,8 @@ func (ce *CommandExecutor) ExecuteCommand(ctx context.Context, command string, t
 	}
 
 	ce.logger.Info("Command executed successfully", map[string]any{
-		"command":  command,
-		"duration": duration.String(),
+		"command":       command,
+		"duration":      duration.String(),
 		"output_length": len(output),
 	})
 
@@ -88,7 +88,7 @@ func (ce *CommandExecutor) ExecuteSSHCommand(ctx context.Context, host, command,
 
 	// Build SSH command
 	sshCmd := []string{"ssh"}
-	
+
 	if user != "" {
 		sshCmd = append(sshCmd, "-l", user)
 	}
@@ -98,9 +98,9 @@ func (ce *CommandExecutor) ExecuteSSHCommand(ctx context.Context, host, command,
 	if keyPath != "" {
 		sshCmd = append(sshCmd, "-i", keyPath)
 	}
-	
+
 	sshCmd = append(sshCmd, host, command)
-	
+
 	// Set default timeout if not provided
 	if timeout <= 0 {
 		timeout = 30
@@ -135,9 +135,9 @@ func (ce *CommandExecutor) ExecuteSSHCommand(ctx context.Context, host, command,
 	}
 
 	ce.logger.Info("SSH command executed successfully", map[string]any{
-		"host":     host,
-		"command":  command,
-		"duration": duration.String(),
+		"host":          host,
+		"command":       command,
+		"duration":      duration.String(),
 		"output_length": len(output),
 	})
 
@@ -166,7 +166,7 @@ func (ce *CommandExecutor) ExecuteDockerCompose(ctx context.Context, path, comma
 
 	// Build docker-compose command
 	args := []string{"docker-compose", "-f", path}
-	
+
 	switch command {
 	case "up":
 		args = append(args, "up")
@@ -187,8 +187,8 @@ func (ce *CommandExecutor) ExecuteDockerCompose(ctx context.Context, path, comma
 	// Log Docker Compose command execution
 	ce.logger.Info("Executing Docker Compose command", map[string]any{
 		"path":           path,
-		"command":       command,
-		"detached":      detached,
+		"command":        command,
+		"detached":       detached,
 		"remove_volumes": removeVolumes,
 	})
 
@@ -210,8 +210,8 @@ func (ce *CommandExecutor) ExecuteDockerCompose(ctx context.Context, path, comma
 
 	ce.logger.Info("Docker Compose command executed successfully", map[string]any{
 		"path":          path,
-		"command":      command,
-		"duration":     duration.String(),
+		"command":       command,
+		"duration":      duration.String(),
 		"output_length": len(output),
 	})
 

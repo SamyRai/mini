@@ -34,25 +34,25 @@ const (
 
 // LogEntry represents a structured log entry
 type LogEntry struct {
-	Timestamp   time.Time         `json:"timestamp"`
-	Level       LogLevel          `json:"level"`
-	Tool        string            `json:"tool,omitempty"`
-	Duration    time.Duration     `json:"duration,omitempty"`
-	Success     bool              `json:"success,omitempty"`
-	UserAgent   string            `json:"user_agent,omitempty"`
-	RequestID   string            `json:"request_id,omitempty"`
-	Message     string            `json:"message"`
-	Fields      map[string]any    `json:"fields,omitempty"`
-	Error       string            `json:"error,omitempty"`
-	Stack       string            `json:"stack,omitempty"`
+	Timestamp time.Time      `json:"timestamp"`
+	Level     LogLevel       `json:"level"`
+	Tool      string         `json:"tool,omitempty"`
+	Duration  time.Duration  `json:"duration,omitempty"`
+	Success   bool           `json:"success,omitempty"`
+	UserAgent string         `json:"user_agent,omitempty"`
+	RequestID string         `json:"request_id,omitempty"`
+	Message   string         `json:"message"`
+	Fields    map[string]any `json:"fields,omitempty"`
+	Error     string         `json:"error,omitempty"`
+	Stack     string         `json:"stack,omitempty"`
 }
 
 // LoggerImpl provides structured logging functionality
 type LoggerImpl struct {
-	output   io.Writer
-	level    LogLevel
-	mu       sync.Mutex
-	metrics  *Metrics
+	output  io.Writer
+	level   LogLevel
+	mu      sync.Mutex
+	metrics *Metrics
 }
 
 // NewLogger creates a new logger
@@ -60,7 +60,7 @@ func NewLogger(output io.Writer, level LogLevel) Logger {
 	if output == nil {
 		output = os.Stderr
 	}
-	
+
 	return &LoggerImpl{
 		output:  output,
 		level:   level,
@@ -73,14 +73,14 @@ func (l *LoggerImpl) Log(level LogLevel, message string, fields map[string]any) 
 	if !l.shouldLog(level) {
 		return
 	}
-	
+
 	entry := LogEntry{
 		Timestamp: time.Now(),
 		Level:     level,
 		Message:   message,
 		Fields:    fields,
 	}
-	
+
 	l.writeEntry(entry)
 }
 
@@ -104,11 +104,11 @@ func (l *LoggerImpl) Error(message string, err error, fields map[string]any) {
 	if fields == nil {
 		fields = make(map[string]any)
 	}
-	
+
 	if err != nil {
 		fields["error"] = err.Error()
 	}
-	
+
 	l.Log(LogLevelError, message, fields)
 }
 
@@ -127,7 +127,7 @@ func (l *LoggerImpl) shouldLog(level LogLevel) bool {
 		LogLevelError:   3,
 		LogLevelFatal:   4,
 	}
-	
+
 	return levels[level] >= levels[l.level]
 }
 
@@ -135,17 +135,17 @@ func (l *LoggerImpl) shouldLog(level LogLevel) bool {
 func (l *LoggerImpl) writeEntry(entry LogEntry) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
-	
+
 	// Update metrics
 	l.metrics.IncrementLogCount(entry.Level, entry.Tool)
-	
+
 	// Marshal to JSON
 	data, err := json.Marshal(entry)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to marshal log entry: %v\n", err)
 		return
 	}
-	
+
 	// Write to output
 	if _, err := fmt.Fprintln(l.output, string(data)); err != nil {
 		// Log error but don't fail the operation
@@ -187,16 +187,16 @@ func (l *ContextLogger) Log(level LogLevel, message string, fields map[string]an
 	if fields == nil {
 		fields = make(map[string]any)
 	}
-	
+
 	// Extract context information
 	if requestID, ok := l.ctx.Value("request_id").(string); ok {
 		fields["request_id"] = requestID
 	}
-	
+
 	if userAgent, ok := l.ctx.Value("user_agent").(string); ok {
 		fields["user_agent"] = userAgent
 	}
-	
+
 	l.logger.Log(level, message, fields)
 }
 
@@ -239,7 +239,7 @@ func (l *ToolLogger) Log(level LogLevel, message string, fields map[string]any) 
 	if fields == nil {
 		fields = make(map[string]any)
 	}
-	
+
 	fields["tool"] = l.tool
 	l.logger.Log(level, message, fields)
 }
@@ -264,7 +264,7 @@ func (l *ToolLogger) Error(message string, err error, fields map[string]any) {
 	if fields == nil {
 		fields = make(map[string]any)
 	}
-	
+
 	fields["tool"] = l.tool
 	l.logger.Error(message, err, fields)
 }
@@ -322,7 +322,7 @@ func NewMetrics() *Metrics {
 func (m *Metrics) IncrementLogCount(level LogLevel, tool string) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	
+
 	key := fmt.Sprintf("%s:%s", level, tool)
 	m.LogCounts[key]++
 }
@@ -331,13 +331,13 @@ func (m *Metrics) IncrementLogCount(level LogLevel, tool string) {
 func (m *Metrics) RecordResponseTime(tool string, duration time.Duration) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	
+
 	if m.ResponseTimes[tool] == nil {
 		m.ResponseTimes[tool] = make([]time.Duration, 0)
 	}
-	
+
 	m.ResponseTimes[tool] = append(m.ResponseTimes[tool], duration)
-	
+
 	// Keep only the last 1000 measurements
 	if len(m.ResponseTimes[tool]) > 1000 {
 		m.ResponseTimes[tool] = m.ResponseTimes[tool][len(m.ResponseTimes[tool])-1000:]
@@ -348,7 +348,7 @@ func (m *Metrics) RecordResponseTime(tool string, duration time.Duration) {
 func (m *Metrics) UpdateErrorRate(tool string, rate float64) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	
+
 	m.ErrorRates[tool] = rate
 }
 
@@ -356,7 +356,7 @@ func (m *Metrics) UpdateErrorRate(tool string, rate float64) {
 func (m *Metrics) SetActiveConnections(count int) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	
+
 	m.ActiveConnections = count
 }
 
@@ -364,17 +364,17 @@ func (m *Metrics) SetActiveConnections(count int) {
 func (m *Metrics) GetAverageResponseTime(tool string) time.Duration {
 	m.mu.RLock()
 	defer m.mu.RUnlock()
-	
+
 	times, exists := m.ResponseTimes[tool]
 	if !exists || len(times) == 0 {
 		return 0
 	}
-	
+
 	var total time.Duration
 	for _, t := range times {
 		total += t
 	}
-	
+
 	return total / time.Duration(len(times))
 }
 
@@ -569,7 +569,7 @@ func InitGlobalLogger(level LogLevel) {
 	globalLogger = NewLogger(os.Stderr, level)
 	// Test log to ensure logger is working
 	globalLogger.Info("Global logger initialized", map[string]any{
-		"level": string(level),
+		"level":  string(level),
 		"output": "stderr",
 	})
 }

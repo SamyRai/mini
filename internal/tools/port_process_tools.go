@@ -37,7 +37,7 @@ func RegisterPortProcessTools(server *mcp.Server, toolRegistry *registry.TypeSaf
 			}
 			return nil
 		})
-		
+
 	if err := portProcessBuilder.Register(); err != nil {
 		// Log error but continue - tool registration failure should not crash the server
 		return
@@ -84,16 +84,16 @@ func listPorts(executor *registry.CommandExecutor, state string) (string, error)
 	if err != nil {
 		return "", err
 	}
-	
+
 	lines := strings.Split(output, "\n")
 	var result strings.Builder
-	
+
 	for _, line := range lines {
 		if state == "" || strings.Contains(line, state) {
 			result.WriteString(line + "\n")
 		}
 	}
-	
+
 	return result.String(), nil
 }
 
@@ -103,16 +103,16 @@ func listProcesses(executor *registry.CommandExecutor, user string) (string, err
 	if err != nil {
 		return "", err
 	}
-	
+
 	lines := strings.Split(output, "\n")
 	var result strings.Builder
-	
+
 	for _, line := range lines {
 		if user == "" || strings.Contains(line, user) {
 			result.WriteString(line + "\n")
 		}
 	}
-	
+
 	return result.String(), nil
 }
 
@@ -121,12 +121,12 @@ func killProcess(executor *registry.CommandExecutor, pid int) (string, error) {
 	if pid <= 0 {
 		return "", fmt.Errorf("invalid process ID: %d", pid)
 	}
-	
+
 	success := executor.KillProcessGracefully(context.Background(), pid)
 	if !success {
 		return "", fmt.Errorf("failed to kill process %d", pid)
 	}
-	
+
 	return fmt.Sprintf("Process %d killed successfully", pid), nil
 }
 
@@ -135,12 +135,12 @@ func findPort(executor *registry.CommandExecutor, port int) (string, error) {
 	if port <= 0 {
 		return "", fmt.Errorf("invalid port: %d", port)
 	}
-	
+
 	output, err := executor.ExecuteSystemCommand(context.Background(), "lsof", "-i", ":"+strconv.Itoa(port))
 	if err != nil {
 		return "", fmt.Errorf("failed to find processes on port %d: %w", port, err)
 	}
-	
+
 	return output, nil
 }
 
@@ -235,12 +235,12 @@ func getPortInfo(executor *registry.CommandExecutor, port int) (string, error) {
 	if port <= 0 {
 		return "", fmt.Errorf("invalid port: %d", port)
 	}
-	
+
 	output, err := executor.ExecuteSystemCommand(context.Background(), "lsof", "-i", ":"+strconv.Itoa(port))
 	if err != nil {
 		return "", fmt.Errorf("failed to get info for port %d: %w", port, err)
 	}
-	
+
 	return output, nil
 }
 
@@ -249,12 +249,12 @@ func getProcessInfo(executor *registry.CommandExecutor, pid int) (string, error)
 	if pid <= 0 {
 		return "", fmt.Errorf("invalid process ID: %d", pid)
 	}
-	
+
 	output, err := executor.ExecuteSystemCommand(context.Background(), "ps", "-p", strconv.Itoa(pid), "-o", "pid,ppid,cmd,user,time")
 	if err != nil {
 		return "", fmt.Errorf("failed to get info for process %d: %w", pid, err)
 	}
-	
+
 	return output, nil
 }
 
@@ -264,6 +264,6 @@ func getNetworkStats(executor *registry.CommandExecutor) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	
+
 	return output, nil
 }

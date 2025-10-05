@@ -18,8 +18,8 @@ type Environment string
 
 const (
 	EnvironmentDevelopment Environment = "development"
-	EnvironmentStaging    Environment = "staging"
-	EnvironmentProduction Environment = "production"
+	EnvironmentStaging     Environment = "staging"
+	EnvironmentProduction  Environment = "production"
 )
 
 // Config holds the application configuration
@@ -27,11 +27,11 @@ type Config struct {
 	Environment string `json:"environment"`
 	LogLevel    string `json:"log_level"`
 	Port        string `json:"port"`
-	
-	Security   SecurityConfig   `json:"security"`
-	Auth       AuthConfig       `json:"auth"`
+
+	Security    SecurityConfig    `json:"security"`
+	Auth        AuthConfig        `json:"auth"`
 	Performance PerformanceConfig `json:"performance"`
-	
+
 	// Feature flags
 	Features FeatureFlags `json:"features"`
 }
@@ -39,26 +39,26 @@ type Config struct {
 // SecurityConfig holds security-related configuration
 type SecurityConfig struct {
 	// Command execution settings
-	AllowedCommands []string `json:"allowed_commands"`
-	WorkingDirectory string `json:"working_directory"`
-	CommandTimeout time.Duration `json:"command_timeout"`
-	MaxOutputSize int64 `json:"max_output_size"`
-	
+	AllowedCommands  []string      `json:"allowed_commands"`
+	WorkingDirectory string        `json:"working_directory"`
+	CommandTimeout   time.Duration `json:"command_timeout"`
+	MaxOutputSize    int64         `json:"max_output_size"`
+
 	// Path restrictions
 	AllowedPaths []string `json:"allowed_paths"`
 	BlockedPaths []string `json:"blocked_paths"`
-	
+
 	// Environment variables
 	AllowedEnvVars []string `json:"allowed_env_vars"`
 }
 
 // AuthConfig holds authentication configuration
 type AuthConfig struct {
-	APIKeys     map[string]string `json:"api_keys"`
-	RateLimiting time.Duration    `json:"rate_limiting"`
-	IPWhitelist  []string         `json:"ip_whitelist"`
-	MaxRequests  int              `json:"max_requests"`
-	WindowSize   time.Duration    `json:"window_size"`
+	APIKeys      map[string]string `json:"api_keys"`
+	RateLimiting time.Duration     `json:"rate_limiting"`
+	IPWhitelist  []string          `json:"ip_whitelist"`
+	MaxRequests  int               `json:"max_requests"`
+	WindowSize   time.Duration     `json:"window_size"`
 }
 
 // PerformanceConfig holds performance-related configuration
@@ -68,7 +68,7 @@ type PerformanceConfig struct {
 	IdleTimeout           time.Duration `json:"idle_timeout"`
 	ReadTimeout           time.Duration `json:"read_timeout"`
 	WriteTimeout          time.Duration `json:"write_timeout"`
-	
+
 	// Caching settings
 	CacheEnabled bool          `json:"cache_enabled"`
 	CacheTTL     time.Duration `json:"cache_ttl"`
@@ -160,24 +160,24 @@ func loadSecurityConfig() SecurityConfig {
 		BlockedPaths:     []string{"/etc/passwd", "/etc/shadow", "/root", "/home"},
 		AllowedEnvVars:   []string{"PATH", "HOME", "USER", "PWD"},
 	}
-	
+
 	// Override with environment variables if provided
 	if allowedCommands := getEnv("SECURITY_ALLOWED_COMMANDS", ""); allowedCommands != "" {
 		config.AllowedCommands = strings.Split(allowedCommands, ",")
 	}
-	
+
 	if allowedPaths := getEnv("SECURITY_ALLOWED_PATHS", ""); allowedPaths != "" {
 		config.AllowedPaths = strings.Split(allowedPaths, ",")
 	}
-	
+
 	if blockedPaths := getEnv("SECURITY_BLOCKED_PATHS", ""); blockedPaths != "" {
 		config.BlockedPaths = strings.Split(blockedPaths, ",")
 	}
-	
+
 	if allowedEnvVars := getEnv("SECURITY_ALLOWED_ENV_VARS", ""); allowedEnvVars != "" {
 		config.AllowedEnvVars = strings.Split(allowedEnvVars, ",")
 	}
-	
+
 	return config
 }
 
@@ -190,7 +190,7 @@ func loadAuthConfig() AuthConfig {
 		MaxRequests:  getIntEnv("AUTH_MAX_REQUESTS", 1000),
 		WindowSize:   getDurationEnv("AUTH_WINDOW_SIZE", 1*time.Hour),
 	}
-	
+
 	// Load API keys from environment
 	if apiKeys := getEnv("AUTH_API_KEYS", ""); apiKeys != "" {
 		pairs := strings.Split(apiKeys, ",")
@@ -201,12 +201,12 @@ func loadAuthConfig() AuthConfig {
 			}
 		}
 	}
-	
+
 	// Load IP whitelist
 	if ipWhitelist := getEnv("AUTH_IP_WHITELIST", ""); ipWhitelist != "" {
 		config.IPWhitelist = strings.Split(ipWhitelist, ",")
 	}
-	
+
 	return config
 }
 
@@ -237,24 +237,24 @@ func loadFeatureFlags() FeatureFlags {
 // ToSecurityConfig converts the security configuration to the security package format
 func (c *Config) ToSecurityConfig() *security.SecurityConfig {
 	return &security.SecurityConfig{
-		AllowedCommands: c.Security.AllowedCommands,
+		AllowedCommands:  c.Security.AllowedCommands,
 		WorkingDirectory: c.Security.WorkingDirectory,
-		CommandTimeout: c.Security.CommandTimeout,
-		MaxOutputSize: c.Security.MaxOutputSize,
-		AllowedEnvVars: c.Security.AllowedEnvVars,
-		AllowedPaths: c.Security.AllowedPaths,
-		BlockedPaths: c.Security.BlockedPaths,
+		CommandTimeout:   c.Security.CommandTimeout,
+		MaxOutputSize:    c.Security.MaxOutputSize,
+		AllowedEnvVars:   c.Security.AllowedEnvVars,
+		AllowedPaths:     c.Security.AllowedPaths,
+		BlockedPaths:     c.Security.BlockedPaths,
 	}
 }
 
 // ToAuthConfig converts the auth configuration to the auth package format
 func (c *Config) ToAuthConfig() *auth.AuthConfig {
 	return &auth.AuthConfig{
-		APIKeys: c.Auth.APIKeys,
+		APIKeys:      c.Auth.APIKeys,
 		RateLimiting: c.Auth.RateLimiting,
-		IPWhitelist: c.Auth.IPWhitelist,
-		MaxRequests: c.Auth.MaxRequests,
-		WindowSize: c.Auth.WindowSize,
+		IPWhitelist:  c.Auth.IPWhitelist,
+		MaxRequests:  c.Auth.MaxRequests,
+		WindowSize:   c.Auth.WindowSize,
 	}
 }
 
@@ -279,7 +279,7 @@ func (c *Config) Validate() error {
 	if err := validation.StringRequired("port", c.Port); err != nil {
 		return err
 	}
-	
+
 	// Validate log level
 	logLevelValidator := validation.EnumString("DEBUG", "INFO", "WARNING", "ERROR")
 	if err := logLevelValidator("log_level", c.LogLevel); err != nil {
@@ -291,7 +291,7 @@ func (c *Config) Validate() error {
 	if err := envValidator("environment", c.Environment); err != nil {
 		return err
 	}
-	
+
 	// Validate command timeout
 	vf := validation.NewValidationFactory()
 	if err := vf.DurationPositive("command_timeout", c.Security.CommandTimeout); err != nil {
@@ -313,7 +313,7 @@ func (c *Config) Validate() error {
 	if err := vf.DurationPositive("window_size", c.Auth.WindowSize); err != nil {
 		return err
 	}
-	
+
 	return nil
 }
 
@@ -373,11 +373,11 @@ func loadConfigFromFile(filename string, config *Config) error {
 	if err != nil {
 		return fmt.Errorf("failed to read config file: %w", err)
 	}
-	
+
 	if err := json.Unmarshal(data, config); err != nil {
 		return fmt.Errorf("failed to parse config file: %w", err)
 	}
-	
+
 	return nil
 }
 
@@ -393,7 +393,7 @@ func loadConfigFromEnv(config *Config) {
 	if port := getEnv("PORT", ""); port != "" {
 		config.Port = port
 	}
-	
+
 	// Override security settings
 	if allowedCommands := getEnv("SECURITY_ALLOWED_COMMANDS", ""); allowedCommands != "" {
 		config.Security.AllowedCommands = strings.Split(allowedCommands, ",")
@@ -411,7 +411,7 @@ func loadConfigFromEnv(config *Config) {
 			config.Security.MaxOutputSize = size
 		}
 	}
-	
+
 	// Override auth settings
 	if rateLimit := getEnv("AUTH_RATE_LIMITING", ""); rateLimit != "" {
 		if duration, err := time.ParseDuration(rateLimit); err == nil {
@@ -428,7 +428,7 @@ func loadConfigFromEnv(config *Config) {
 			config.Auth.WindowSize = duration
 		}
 	}
-	
+
 	// Override performance settings
 	if maxConcurrent := getEnv("PERF_MAX_CONCURRENT_REQUESTS", ""); maxConcurrent != "" {
 		if concurrent, err := strconv.Atoi(maxConcurrent); err == nil {

@@ -39,14 +39,18 @@ func (s *StringValidationStrategy) GetName() string {
 }
 
 // NumericValidationStrategy handles numeric validation for specific numeric types
-type NumericValidationStrategy[T interface{ ~int | ~int8 | ~int16 | ~int32 | ~int64 | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~float32 | ~float64 }] struct {
+type NumericValidationStrategy[T interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~float32 | ~float64
+}] struct {
 	name string
 	min  *T
 	max  *T
 }
 
 // NewNumericValidationStrategy creates a new numeric validation strategy
-func NewNumericValidationStrategy[T interface{ ~int | ~int8 | ~int16 | ~int32 | ~int64 | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~float32 | ~float64 }](min, max *T) ValidationStrategy[T] {
+func NewNumericValidationStrategy[T interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~float32 | ~float64
+}](min, max *T) ValidationStrategy[T] {
 	return &NumericValidationStrategy[T]{
 		name: "numeric",
 		min:  min,
@@ -133,4 +137,3 @@ func (s *CompositeValidationStrategy[T]) Validate(field string, value T) error {
 func (s *CompositeValidationStrategy[T]) GetName() string {
 	return s.name
 }
-

@@ -37,7 +37,7 @@ func RegisterSystemTools(server *mcp.Server, toolRegistry *registry.TypeSafeTool
 		WithValidator(func(args SystemInfoArgs) error {
 			return nil
 		})
-		
+
 	if err := systemBuilder.Register(); err != nil {
 		// Log error but continue - tool registration failure should not crash the server
 		return
@@ -74,7 +74,7 @@ func RegisterSystemTools(server *mcp.Server, toolRegistry *registry.TypeSafeTool
 		WithValidator(func(args MetricsArgs) error {
 			return nil
 		})
-		
+
 	if err := metricsBuilder.Register(); err != nil {
 		// Log error but continue - tool registration failure should not crash the server
 		return

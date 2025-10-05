@@ -21,43 +21,43 @@ type ErrorCode string
 
 const (
 	// Authentication errors
-	ErrorCodeUnauthorized     ErrorCode = "UNAUTHORIZED"
-	ErrorCodeInvalidAPIKey    ErrorCode = "INVALID_API_KEY"
+	ErrorCodeUnauthorized      ErrorCode = "UNAUTHORIZED"
+	ErrorCodeInvalidAPIKey     ErrorCode = "INVALID_API_KEY"
 	ErrorCodeRateLimitExceeded ErrorCode = "RATE_LIMIT_EXCEEDED"
-	
+
 	// Command execution errors
-	ErrorCodeCommandNotFound  ErrorCode = "COMMAND_NOT_FOUND"
-	ErrorCodeCommandTimeout   ErrorCode = "COMMAND_TIMEOUT"
-	ErrorCodeCommandFailed    ErrorCode = "COMMAND_FAILED"
-	ErrorCodeCommandBlocked   ErrorCode = "COMMAND_BLOCKED"
-	
+	ErrorCodeCommandNotFound ErrorCode = "COMMAND_NOT_FOUND"
+	ErrorCodeCommandTimeout  ErrorCode = "COMMAND_TIMEOUT"
+	ErrorCodeCommandFailed   ErrorCode = "COMMAND_FAILED"
+	ErrorCodeCommandBlocked  ErrorCode = "COMMAND_BLOCKED"
+
 	// File system errors
 	ErrorCodeFileNotFound     ErrorCode = "FILE_NOT_FOUND"
 	ErrorCodePermissionDenied ErrorCode = "PERMISSION_DENIED"
 	ErrorCodePathBlocked      ErrorCode = "PATH_BLOCKED"
-	
+
 	// Validation errors
-	ErrorCodeInvalidInput     ErrorCode = "INVALID_INPUT"
-	ErrorCodeMissingRequired  ErrorCode = "MISSING_REQUIRED"
-	ErrorCodeInvalidFormat    ErrorCode = "INVALID_FORMAT"
-	
+	ErrorCodeInvalidInput    ErrorCode = "INVALID_INPUT"
+	ErrorCodeMissingRequired ErrorCode = "MISSING_REQUIRED"
+	ErrorCodeInvalidFormat   ErrorCode = "INVALID_FORMAT"
+
 	// System errors
-	ErrorCodeInternalError    ErrorCode = "INTERNAL_ERROR"
+	ErrorCodeInternalError      ErrorCode = "INTERNAL_ERROR"
 	ErrorCodeServiceUnavailable ErrorCode = "SERVICE_UNAVAILABLE"
-	ErrorCodeResourceExhausted ErrorCode = "RESOURCE_EXHAUSTED"
+	ErrorCodeResourceExhausted  ErrorCode = "RESOURCE_EXHAUSTED"
 )
 
 // ErrorResponse represents a structured error response
 type ErrorResponse struct {
-	Code        ErrorCode            `json:"code"`
-	Message     string               `json:"message"`
-	Details     map[string]any       `json:"details,omitempty"`
-	Retryable   bool                 `json:"retryable"`
-	RequestID   string               `json:"request_id,omitempty"`
-	Timestamp   time.Time            `json:"timestamp"`
-	Suggestions []string             `json:"suggestions,omitempty"`
-	Stack       string               `json:"stack,omitempty"`
-	Cause       error                `json:"-"`
+	Code        ErrorCode      `json:"code"`
+	Message     string         `json:"message"`
+	Details     map[string]any `json:"details,omitempty"`
+	Retryable   bool           `json:"retryable"`
+	RequestID   string         `json:"request_id,omitempty"`
+	Timestamp   time.Time      `json:"timestamp"`
+	Suggestions []string       `json:"suggestions,omitempty"`
+	Stack       string         `json:"stack,omitempty"`
+	Cause       error          `json:"-"`
 }
 
 // NewErrorResponse creates a new error response
@@ -137,12 +137,12 @@ func (e *ErrorResponse) ToJSON() ([]byte, error) {
 // isRetryable determines if an error code is retryable
 func isRetryable(code ErrorCode) bool {
 	retryableCodes := map[ErrorCode]bool{
-		ErrorCodeRateLimitExceeded: true,
-		ErrorCodeCommandTimeout:    true,
+		ErrorCodeRateLimitExceeded:  true,
+		ErrorCodeCommandTimeout:     true,
 		ErrorCodeServiceUnavailable: true,
-		ErrorCodeResourceExhausted: true,
+		ErrorCodeResourceExhausted:  true,
 	}
-	
+
 	return retryableCodes[code]
 }
 

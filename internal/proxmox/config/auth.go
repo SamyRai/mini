@@ -3,8 +3,8 @@ package config
 import (
 	"os"
 
-	"mini-mcp/internal/proxmox/types"
 	"gopkg.in/yaml.v3"
+	"mini-mcp/internal/proxmox/types"
 )
 
 // LoadAuthConfig loads authentication configuration from a YAML file
