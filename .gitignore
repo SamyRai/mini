@@ -24,6 +24,16 @@ mini-mcp-cli
 dist/
 build/
 
+# Compiled binaries and executables
+tools/tea/tea
+*.exe
+*.dll
+*.so
+*.dylib
+*.bin
+*.o
+*.a
+
 # IDE files
 .vscode/
 .idea/
