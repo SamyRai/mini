@@ -132,7 +132,7 @@ The installer automatically updates VS Code and Cursor settings with the followi
 
 ## Requirements
 
-- Go 1.21 or later
+- Go 1.25 or later
 - Write permissions to installation directory
 - Write permissions to VS Code/Cursor settings directory
 

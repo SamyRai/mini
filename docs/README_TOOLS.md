@@ -1,5 +1,7 @@
 # Mini MCP Tools Documentation
 
+**📚 [← Back to Main README](../README.md) | [🏗️ Architecture Documentation](README_ARCHITECTURE.md) | [⚙️ Proxmox Configuration](PROXMOX_CONFIG.md) | [🔒 Type Safety](TYPE_SAFETY_IMPROVEMENTS.md) | [🤖 Agent Guide](AGENT.md)**
+
 This document provides comprehensive documentation for all available MCP tools in the enhanced mini-mcp server.
 
 ## Overview

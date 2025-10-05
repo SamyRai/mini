@@ -1,5 +1,7 @@
 # Mini MCP - Infrastructure Management Platform
 
+**🏗️ [Architecture Documentation](docs/README_ARCHITECTURE.md) | [🛠️ Tools Documentation](docs/README_TOOLS.md) | [⚙️ Proxmox Configuration](docs/PROXMOX_CONFIG.md) | [🔒 Type Safety](docs/TYPE_SAFETY_IMPROVEMENTS.md) | [🤖 Agent Guide](docs/AGENT.md)**
+
 A production-ready Model Context Protocol (MCP) server and CLI tool for infrastructure management with comprehensive security, authentication, monitoring, and health check capabilities.
 
 ## 🚀 Features
@@ -70,27 +72,113 @@ mini-mcp/
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Go 1.25 or later
-- Docker (optional, for Docker-related tools)
-- Nomad (optional, for Nomad-related tools)
+- **Go 1.25 or later** - Required for building and running
+- **Docker** (optional) - For Docker-related tools and operations
+- **Docker Compose v2** (optional) - For compose operations
+- **sudo access** (for system-wide installation)
 
 ### Installation
 
-1. **Clone the repository**
+#### Option 1: Quick Installation (Recommended)
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd mini-mcp
+
+# Build and install system-wide with one command
+make install-all
+```
+
+This automatically:
+- Builds the MCP binary with optimizations
+- Installs it to `/usr/local/bin/`
+- Configures VS Code and Cursor settings
+- Verifies the installation
+
+#### Option 2: Manual Installation
+
+1. **Clone and build**
    ```bash
    git clone <repository-url>
    cd mini-mcp
+
+   # Build the MCP binary with optimizations
+   go build -ldflags="-s -w" -o mini-mcp cmd/mini-mcp/main.go
    ```
 
-2. **Build the MCP binary**
+2. **Install system-wide (optional)**
    ```bash
-   go build -o mini-mcp cmd/mini-mcp.go
+   # Copy to system PATH
+   sudo cp mini-mcp /usr/local/bin/mini-mcp
+   sudo chmod +x /usr/local/bin/mini-mcp
    ```
 
-3. **Install system-wide (optional)**
-   ```bash
-   make install-all
-   ```
+#### Option 3: Development Installation
+
+For development, you can run directly without installation:
+```bash
+# Run as MCP server
+go run cmd/mini-mcp/main.go -mode=server
+
+# Run as CLI tool
+go run cmd/mini-mcp/main.go -mode=cli
+```
+
+#### Verification
+
+After installation, verify everything works correctly:
+
+```bash
+# Check binary is in PATH
+which mini-mcp
+
+# Test MCP server mode
+echo '{"type": "initialize"}' | mini-mcp -mode=server
+
+# Test CLI mode
+echo '{"type": "run", "payload": {"command": "ls -la"}}' | mini-mcp -mode=cli
+```
+
+#### Docker Configuration (Optional)
+
+If using Docker tools, configure Docker contexts:
+
+```bash
+# List available contexts
+docker context ls
+
+# Create context for remote Docker
+docker context create remote --docker "host=tcp://remote:2376"
+
+# Set Docker host environment variable
+export DOCKER_HOST=tcp://remote:2376
+```
+
+#### Uninstallation
+
+To remove the system-wide binary:
+```bash
+sudo rm /usr/local/bin/mini-mcp
+```
+
+#### Troubleshooting
+
+**Binary Not Found**
+If `which mini-mcp` returns nothing:
+1. Check if the binary was installed: `ls -la /usr/local/bin/mini-mcp`
+2. Reinstall using: `make install-all`
+
+**Permission Denied**
+If you get permission errors:
+1. Check file permissions: `ls -la /usr/local/bin/mini-mcp`
+2. Fix permissions: `sudo chmod +x /usr/local/bin/mini-mcp`
+
+**Build Errors**
+If the build fails:
+1. Ensure Go 1.25+ is installed: `go version`
+2. Check dependencies: `go mod tidy`
+3. Try building manually: `go build -o mini-mcp cmd/mini-mcp/main.go`
 
 ## 📖 Usage
 
@@ -426,12 +514,15 @@ go test -bench=. ./internal/shared/security/
 
 ## 📚 Production-Ready Documentation
 
-- [Architecture Documentation](README_ARCHITECTURE.md) - Detailed production-ready architecture overview
-- [Tools Documentation](README_TOOLS.md) - Complete tool reference with security guidelines
-- [Installation Guide](INSTALLATION.md) - Production deployment and setup instructions
-- [Security Guide](SECURITY.md) - Security hardening and best practices
-- [Monitoring Guide](MONITORING.md) - Observability and alerting setup
-- [Operations Guide](OPERATIONS.md) - Production operations and maintenance
+- [Architecture Documentation](docs/README_ARCHITECTURE.md) - Detailed architecture overview and design principles
+- [Tools Documentation](docs/README_TOOLS.md) - Complete tool reference with security guidelines and usage examples
+- [Proxmox Configuration Guide](docs/PROXMOX_CONFIG.md) - Proxmox server setup and authentication
+- [Type Safety Documentation](docs/TYPE_SAFETY_IMPROVEMENTS.md) - Go 1.25 generics and type-safe implementations
+- [Agent Development Guide](docs/AGENT.md) - Comprehensive context for AI agents and developers
+- [Installer Documentation](internal/installer/README.md) - Detailed installer API and configuration
+- [Security Guide](SECURITY.md) - Security hardening and best practices (if available)
+- [Monitoring Guide](MONITORING.md) - Observability and alerting setup (if available)
+- [Operations Guide](OPERATIONS.md) - Production operations and maintenance (if available)
 
 ## 🚀 Production-Ready Features Summary
 

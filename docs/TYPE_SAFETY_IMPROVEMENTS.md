@@ -1,5 +1,7 @@
 # Type Safety and Generic Improvements
 
+**📚 [← Back to Main README](../README.md) | [🏗️ Architecture Documentation](README_ARCHITECTURE.md) | [🛠️ Tools Documentation](README_TOOLS.md) | [⚙️ Proxmox Configuration](PROXMOX_CONFIG.md) | [🤖 Agent Guide](AGENT.md)**
+
 This document outlines the comprehensive type safety improvements made to the mini-mcp codebase, ensuring full type safety and correct use of generics and interfaces.
 
 ## 🎯 Overview

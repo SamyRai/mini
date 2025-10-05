@@ -1,5 +1,7 @@
 # Proxmox Configuration Guide
 
+**📚 [← Back to Main README](../README.md) | [🏗️ Architecture Documentation](README_ARCHITECTURE.md) | [🛠️ Tools Documentation](README_TOOLS.md) | [🔒 Type Safety](TYPE_SAFETY_IMPROVEMENTS.md) | [🤖 Agent Guide](AGENT.md)**
+
 This guide explains how to configure Proxmox credentials for the mini-mcp server.
 
 ## Configuration Methods

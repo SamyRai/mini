@@ -1,5 +1,7 @@
 # Mini MCP - Architecture Documentation
 
+**📚 [← Back to Main README](../README.md) | [🛠️ Tools Documentation](README_TOOLS.md) | [⚙️ Proxmox Configuration](PROXMOX_CONFIG.md) | [🤖 Agent Guide](AGENT.md)**
+
 ## Overview
 
 Mini MCP is a secure infrastructure management tool that provides both CLI and HTTP server interfaces for executing commands, managing files, and monitoring systems. The project follows a clean, domain-driven architecture with clear separation of concerns.
@@ -11,12 +13,17 @@ Mini MCP is a secure infrastructure management tool that provides both CLI and H
 ```
 mini-mcp/
 ├── cmd/                          # Application entry points
-│   ├── mini-mcp/                # CLI application
-│   │   └── main.go             # CLI entry point
-│   ├── mcp-server/             # HTTP server application
-│   │   └── main.go             # Server entry point
-│   └── test-client/            # Test client
-│       └── main.go             # Test client entry point
+│   ├── mini-mcp/                # MCP server and CLI application
+│   │   └── main.go             # Main entry point supporting both server and CLI modes
+│   └── mini-mcp-cli/           # CLI installer tool
+│       ├── main.go             # CLI installer entry point
+│       └── cmd/                # CLI subcommands
+│           ├── build.go        # Build command
+│           ├── configure.go    # Configuration command
+│           ├── install.go      # Installation command
+│           ├── status.go       # Status command
+│           ├── uninstall.go    # Uninstallation command
+│           └── utils.go        # CLI utilities
 ├── internal/                    # Internal application code
 │   ├── domain/                 # Business logic and domain models
 │   │   ├── command/            # Command execution domain
@@ -192,30 +199,27 @@ Each file and package has a single, well-defined responsibility:
 
 ## Usage
 
+### MCP Server Mode
+
+```bash
+# Build unified MCP binary
+go build -o mini-mcp cmd/mini-mcp/main.go
+
+# Run as MCP server (for Cursor and other MCP clients)
+./mini-mcp -mode=server
+
+# Or use go run
+go run cmd/mini-mcp/main.go -mode=server
+```
+
 ### CLI Mode
 
 ```bash
-# Build CLI binary
-go build -o mini-mcp cmd/mini-mcp/main.go
-
-# Run CLI
-./mini-mcp
+# Run as CLI tool
+./mini-mcp -mode=cli
 
 # Or use go run
-go run cmd/mini-mcp/main.go
-```
-
-### Server Mode
-
-```bash
-# Build server binary
-go build -o mcp-server cmd/mcp-server/main.go
-
-# Run server
-./mcp-server
-
-# Or use go run
-go run cmd/mcp-server/main.go
+go run cmd/mini-mcp/main.go -mode=cli
 ```
 
 ### Entry Point
@@ -227,7 +231,7 @@ go run . help
 # Run CLI mode
 go run . cli
 
-# Run server mode
+# Run server mode (default)
 go run . server
 ```
 
@@ -263,60 +267,43 @@ go run . server
 - Clear naming conventions
 - Consistent structure
 
-## Migration from Old Architecture
+## Architecture Evolution
 
-The new architecture addresses several issues from the old structure:
+The current architecture evolved from earlier implementations to provide better separation of concerns and maintainability:
 
-### Problems Solved
+### Design Decisions
 
-1. **Large main.go (464 lines)** → Split into focused entry points
-2. **Mixed responsibilities** → Clear layer separation
-3. **Inconsistent file sizes** → Enforced size guidelines
-4. **No domain boundaries** → Domain-driven organization
-5. **Mixed CLI/Server logic** → Separate interfaces
+1. **Unified Binary**: Single binary supporting both MCP server and CLI modes
+2. **Clean Architecture**: Clear separation between domain, application, and infrastructure layers
+3. **Domain-Driven Design**: Business logic organized by domain (command, file, system, infrastructure)
+4. **Shared Components**: Common utilities for auth, config, logging, security, and validation
+5. **Type Safety**: Comprehensive use of Go generics and type-safe interfaces
 
-### Migration Strategy
+### Architecture Benefits
 
-1. ✅ Create new directory structure
-2. ✅ Extract domain models and services
-3. ✅ Create application services
-4. ✅ Refactor CLI and HTTP handlers
-5. ✅ Update main files
-6. ✅ Add comprehensive tests
-7. ✅ Update documentation
-8. ✅ Remove legacy and duplicate code
-9. ✅ Apply architectural patterns (DDD, Factory, Strategy, Facade, Observer)
+1. **Unified Interface**: Single binary reduces complexity and maintenance overhead
+2. **Clean Separation**: Domain logic isolated from infrastructure concerns
+3. **Type Safety**: Compile-time guarantees with Go 1.25 generics
+4. **Testability**: Clear interfaces enable comprehensive testing
+5. **Maintainability**: Well-organized code with consistent patterns
 
-## Next Steps
+## Current Implementation Status
 
-### Phase 1: Complete Domain Implementation
+### ✅ Completed Features
 
-- [x] Implement file repository with actual file operations
-- [x] Add system monitoring domain
-- [x] Add infrastructure management domains
-- [x] Apply Domain-Driven Design patterns
-- [x] Implement Factory pattern for handlers
-- [x] Implement Strategy pattern for validation
-- [x] Implement Facade pattern for service orchestration
-- [x] Implement Observer pattern for events
+- **Domain Implementation**: All domain services implemented with proper interfaces
+- **Type Safety**: Full Go 1.25 generics implementation with type-safe validation
+- **Security**: Multi-layer security with command allowlisting and path validation
+- **Infrastructure Tools**: Docker, SSH, Git, and port management capabilities
+- **Monitoring**: Comprehensive health checks and metrics collection
+- **Documentation**: Complete documentation suite across multiple files
 
-### Phase 2: Add Tests
+### 🔄 Active Development Areas
 
-- [ ] Unit tests for domain services
-- [ ] Integration tests for application services
-- [ ] End-to-end tests for CLI and HTTP
-
-### Phase 3: Enhance Features
-
-- [ ] Add more file operations (copy, move, search)
-- [ ] Add system monitoring capabilities
-- [ ] Add infrastructure management features
-
-### Phase 4: Documentation
-
-- [ ] API documentation
-- [ ] User guides
-- [ ] Development guides
+- **Testing**: Unit and integration tests being added incrementally
+- **Performance**: Ongoing optimization and monitoring improvements
+- **Security**: Continuous security enhancements and hardening
+- **Features**: Additional infrastructure management capabilities
 
 ## Contributing
 
@@ -330,4 +317,13 @@ When contributing to this project:
 
 ## Conclusion
 
-The new architecture provides a solid foundation for the Mini MCP tool. It follows clean architecture principles, maintains clear separation of concerns, and provides a scalable structure for future development. The domain-driven approach ensures that business logic is well-organized and easily testable, while the infrastructure layer handles external concerns cleanly.
+The current architecture provides a robust, production-ready foundation for the Mini MCP infrastructure management platform. Built on clean architecture principles with comprehensive type safety and security measures, it offers:
+
+- **Unified Interface**: Single binary supporting both MCP server and CLI modes
+- **Domain-Driven Design**: Well-organized business logic with clear boundaries
+- **Type Safety**: Full compile-time type checking with Go 1.25 generics
+- **Security-First**: Multi-layer security with comprehensive validation
+- **Production Monitoring**: Built-in metrics, health checks, and observability
+- **Infrastructure Management**: Comprehensive Docker, SSH, Git, and system management tools
+
+The architecture successfully balances maintainability, testability, and operational requirements while providing a solid foundation for continued development and feature expansion.
