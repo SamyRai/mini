@@ -1,15 +1,15 @@
-# Mini MCP - Infrastructure Management Platform
+# Mini MCP - Production-Ready Infrastructure Management Platform
 
 [![Go Version](https://img.shields.io/badge/go-1.25+-blue.svg)](https://golang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Go Report Card](https://goreportcard.com/badge/github.com/YOUR_USERNAME/mini-mcp)](https://goreportcard.com/report/github.com/YOUR_USERNAME/mini-mcp)
-[![CI Status](https://github.com/YOUR_USERNAME/mini-mcp/workflows/CI/badge.svg)](https://github.com/YOUR_USERNAME/mini-mcp/actions)
-[![Go Reference](https://pkg.go.dev/badge/github.com/YOUR_USERNAME/mini-mcp.svg)](https://pkg.go.dev/github.com/YOUR_USERNAME/mini-mcp)
-[![Release](https://img.shields.io/github/release/YOUR_USERNAME/mini-mcp.svg)](https://github.com/YOUR_USERNAME/mini-mcp/releases)
+[![Go Report Card](https://goreportcard.com/badge/github.com/damirmukimov/mini-mcp)](https://goreportcard.com/report/github.com/damirmukimov/mini-mcp)
+[![CI Status](https://github.com/damirmukimov/mini-mcp/workflows/CI/badge.svg)](https://github.com/damirmukimov/mini-mcp/actions)
+[![Go Reference](https://pkg.go.dev/badge/github.com/damirmukimov/mini-mcp.svg)](https://pkg.go.dev/github.com/damirmukimov/mini-mcp)
+[![Release](https://img.shields.io/github/release/damirmukimov/mini-mcp.svg)](https://github.com/damirmukimov/mini-mcp/releases)
 
 **🏗️ [Architecture Documentation](docs/README_ARCHITECTURE.md) | [🛠️ Tools Documentation](docs/README_TOOLS.md) | [⚙️ Proxmox Configuration](docs/PROXMOX_CONFIG.md) | [🔒 Type Safety](docs/TYPE_SAFETY_IMPROVEMENTS.md) | [🤖 Agent Guide](docs/AGENT.md)**
 
-A production-ready Model Context Protocol (MCP) server and CLI tool for infrastructure management with comprehensive security, authentication, monitoring, and health check capabilities.
+A production-ready Model Context Protocol (MCP) server and CLI tool for secure infrastructure management with enterprise-grade security, comprehensive monitoring, and type-safe operations.
 
 ## 📋 Table of Contents
 
@@ -24,45 +24,38 @@ A production-ready Model Context Protocol (MCP) server and CLI tool for infrastr
 - [🤝 Contributing](#-contributing)
 - [📄 License](#-license)
 
-## 🚀 Features
+## ✨ Key Features
 
-### 🔒 Production-Ready Security & Safety
-- **Multi-Layer Security**: Command, path, and input validation with dedicated security layers
-- **Sandboxed Execution**: Restricted working directories and environment variables
-- **Advanced Input Sanitization**: Comprehensive sanitization preventing injection attacks
-- **Path Traversal Protection**: Sophisticated path validation against directory traversal
-- **Timeout Enforcement**: Configurable command execution timeouts with graceful cancellation
-- **Security Error Tracking**: Detailed error reporting with stack traces and suggestions
-
-### 🔐 Enterprise Authentication & Authorization
-- **API Key Management**: Secure API key generation and validation with rotation support
-- **Advanced Rate Limiting**: Configurable rate limiting with sliding window and burst handling
-- **IP Whitelisting**: Restrict access to specific IP addresses and CIDR ranges
-- **Request Correlation**: Unique request IDs for tracking and debugging across services
-- **Audit Logging**: Comprehensive audit trails for security events
+### 🔒 Enterprise-Grade Security
+- **Multi-Layer Security**: Command allowlisting, path validation, and input sanitization
+- **Sandboxed Execution**: Restricted working directories with timeout enforcement
+- **Advanced Input Sanitization**: Comprehensive protection against injection attacks
+- **Path Traversal Protection**: Sophisticated validation preventing directory traversal
+- **API Key Authentication**: Secure API key management with rotation support
+- **Rate Limiting**: Configurable rate limiting with sliding window support
 
 ### 📊 Production Monitoring & Observability
-- **Structured Logging**: JSON-formatted logs with contextual metadata and correlation IDs
-- **Advanced Metrics Collection**: Request counts, response times, error rates, and performance percentiles (P95, P99)
-- **Comprehensive Health Checks**: System resources, filesystem, network, security, and dependency monitoring
-- **Performance Monitoring**: Real-time performance tracking with alerting thresholds
-- **Observability Tools**: Built-in metrics endpoint for monitoring dashboards and alerting
+- **Structured Logging**: JSON-formatted logs with correlation IDs and contextual metadata
+- **Advanced Metrics**: Request counts, response times, error rates, and performance percentiles
+- **Health Checks**: Comprehensive system, filesystem, network, and security monitoring
+- **Performance Tracking**: Real-time performance monitoring with alerting thresholds
+- **Audit Logging**: Complete audit trails for security events and operations
 
-### 🛠️ Production-Ready Core Tools
-- **Command Execution**: Run shell commands securely with comprehensive security validation and performance tracking
-- **File Operations**: Read, write, list, and delete files with path validation and detailed error reporting
+### 🛠️ Infrastructure Management Tools
+- **Secure Command Execution**: Run shell commands with comprehensive security validation
+- **File Operations**: Read, write, list, and delete files with path validation
 - **System Monitoring**: Get system information with resource usage and health status
-- **Health Checks**: Comprehensive health monitoring with dependency tracking and alerting
-- **Performance Metrics**: Real-time metrics collection with detailed observability data
-- **Graceful Operations**: Proper resource cleanup and graceful shutdown capabilities
-
-### 🚀 Infrastructure Management
-- **Docker Management**: Enhanced compose operations with context, host, and path support
+- **Docker Management**: Enhanced compose operations with context and remote host support
 - **Docker Swarm**: Cluster information and node management with remote context support
-- **Docker Contexts**: Support for multiple Docker contexts and remote hosts
-- **Git Operations**: Repository cloning and management
-- **SSH Operations**: Remote command execution
-- **Documentation**: Fetch command and tool documentation
+- **SSH Operations**: Remote command execution with key authentication
+- **Port Management**: Network port and process investigation tools
+
+### 🏗️ Modern Architecture
+- **Clean Architecture**: Domain-driven design with clear separation of concerns
+- **Type Safety**: Full Go 1.25 generics implementation with compile-time guarantees
+- **Unified Binary**: Single binary supporting both MCP server and CLI modes
+- **Production Ready**: Comprehensive error handling, graceful shutdown, and resource cleanup
+- **Cross-Platform**: Works on Windows, macOS, and Linux with consistent behavior
 
 ## 🏗️ Architecture
 
@@ -103,7 +96,7 @@ mini-mcp/
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/damirmukimov/mini-mcp.git
 cd mini-mcp
 
 # Build and install system-wide with one command
@@ -120,7 +113,7 @@ This automatically:
 
 1. **Clone and build**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/damirmukimov/mini-mcp.git
    cd mini-mcp
 
    # Build the MCP binary with optimizations
@@ -246,22 +239,22 @@ mini-mcp -mode=cli
 
 **Available Production-Ready MCP Tools**:
 ```json
-{"tool": "run", "arguments": {"command": "ls -la"}}
-{"tool": "ls", "arguments": {"path": "/tmp"}}
-{"tool": "cat", "arguments": {"path": "/etc/hosts"}}
-{"tool": "write", "arguments": {"path": "test.txt", "content": "Hello World"}}
-{"tool": "rm", "arguments": {"path": "test.txt"}}
-{"tool": "system", "arguments": {"metric": "processes"}}
-{"tool": "metrics", "arguments": {}}
+{"tool": "execute_command", "arguments": {"command": "ls -la"}}
+{"tool": "file_operations", "arguments": {"operation": "list", "path": "/tmp"}}
+{"tool": "file_operations", "arguments": {"operation": "read", "path": "/etc/hosts"}}
+{"tool": "file_operations", "arguments": {"operation": "write", "path": "test.txt", "content": "Hello World"}}
+{"tool": "file_operations", "arguments": {"operation": "delete", "path": "test.txt"}}
+{"tool": "system_monitoring", "arguments": {"metric": "processes"}}
+{"tool": "get_metrics", "arguments": {"type": "all"}}
 {"tool": "ssh", "arguments": {"host": "server.example.com", "command": "uptime"}}
 {"tool": "docker_compose", "arguments": {"path": "/project", "command": "up", "detached": true}}
 {"tool": "docker_swarm", "arguments": {"context": "production"}}
 {"tool": "port_process_tools", "arguments": {"command": "list_ports"}}
 ```
 
-**New Metrics Tool**:
+**Metrics Tool**:
 ```json
-{"tool": "metrics", "arguments": {}}
+{"tool": "get_metrics", "arguments": {"type": "all"}}
 ```
 Returns comprehensive application metrics including:
 - Request counts and response times
@@ -546,21 +539,21 @@ go test -bench=. ./internal/shared/security/
 
 ## 🚀 Production-Ready Features Summary
 
-This refactoring has transformed Mini MCP into a production-ready infrastructure management platform with:
+Mini MCP is a production-ready infrastructure management platform with:
 
-### ✅ **Security Enhancements**
+### ✅ **Enterprise Security**
 - Multi-layer security validation (command, path, input)
 - Advanced input sanitization and path traversal protection
 - Comprehensive security error tracking with stack traces
 - Enterprise-grade authentication and authorization
 
-### ✅ **Observability & Monitoring**
+### ✅ **Production Monitoring**
 - Structured logging with correlation IDs and contextual metadata
 - Advanced metrics collection (P95/P99 percentiles, error rates)
 - Comprehensive health checks (system, filesystem, network, security)
 - Built-in metrics endpoint for monitoring dashboards
 
-### ✅ **Performance & Reliability**
+### ✅ **Reliability & Performance**
 - Graceful shutdown with proper resource cleanup
 - Performance monitoring with alerting thresholds
 - Dependency injection and proper error handling

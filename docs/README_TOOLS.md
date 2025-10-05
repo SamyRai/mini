@@ -6,7 +6,7 @@ This document provides comprehensive documentation for all available MCP tools i
 
 ## Overview
 
-The mini-mcp server provides a comprehensive set of tools for infrastructure management, system monitoring, file operations, and command execution. All tools are designed with security, reliability, and production-readiness in mind.
+The mini-mcp server provides a comprehensive set of production-ready tools for infrastructure management, system monitoring, file operations, and command execution. All tools are designed with enterprise-grade security, reliability, and observability in mind.
 
 ## Consistent Patterns
 
@@ -54,7 +54,9 @@ func (args *ToolArgs) Validate() error {
 
 ## Available Tools
 
-### 1. execute_command
+### Core Infrastructure Tools
+
+#### 1. execute_command
 
 **Purpose**: Execute shell commands securely with allowlisting and sandboxing.
 
@@ -105,7 +107,7 @@ func (args *ToolArgs) Validate() error {
 }
 ```
 
-### 2. file_operations
+#### 2. file_operations
 
 **Purpose**: Perform comprehensive file system operations with advanced path validation and security measures.
 
@@ -170,7 +172,7 @@ func (args *ToolArgs) Validate() error {
 }
 ```
 
-### 3. system_monitoring
+#### 3. system_monitoring
 
 **Purpose**: Get comprehensive system information and monitoring data for infrastructure management and performance analysis.
 
@@ -234,7 +236,7 @@ func (args *ToolArgs) Validate() error {
 }
 ```
 
-### 4. health_check
+#### 4. health_check
 
 **Purpose**: Check system health and service status with comprehensive diagnostics.
 
@@ -271,7 +273,7 @@ func (args *ToolArgs) Validate() error {
 }
 ```
 
-### 5. get_metrics
+#### 5. get_metrics
 
 **Purpose**: Get application metrics and performance data for monitoring and analytics.
 
@@ -309,7 +311,9 @@ func (args *ToolArgs) Validate() error {
 }
 ```
 
-### 6. docker_compose
+### Infrastructure Management Tools
+
+#### 6. docker_compose
 
 **Purpose**: Execute Docker Compose operations with enhanced configuration support.
 
@@ -379,7 +383,7 @@ func (args *ToolArgs) Validate() error {
 }
 ```
 
-### 7. docker_swarm
+#### 7. docker_swarm
 
 **Purpose**: Get Docker Swarm cluster information with enhanced configuration support.
 
@@ -419,7 +423,7 @@ func (args *ToolArgs) Validate() error {
 }
 ```
 
-### 8. docker_swarm
+#### 8. docker_swarm (Duplicate - Remove)
 
 **Purpose**: Get Docker Swarm cluster information with enhanced configuration support.
 
@@ -459,7 +463,7 @@ func (args *ToolArgs) Validate() error {
 }
 ```
 
-### 9. ssh
+#### 9. ssh
 
 **Purpose**: Execute remote commands over SSH with security validation and comprehensive connection options.
 
@@ -519,7 +523,7 @@ func (args *ToolArgs) Validate() error {
 }
 ```
 
-### 10. port_process_tools
+#### 10. port_process_tools
 
 **Purpose**: Investigate and manage network ports and processes for debugging, monitoring, and system maintenance.
 

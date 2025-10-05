@@ -2,7 +2,7 @@
 
 **📚 [← Back to Main README](../README.md) | [🏗️ Architecture Documentation](README_ARCHITECTURE.md) | [🛠️ Tools Documentation](README_TOOLS.md) | [🔒 Type Safety](TYPE_SAFETY_IMPROVEMENTS.md) | [🤖 Agent Guide](AGENT.md)**
 
-This guide explains how to configure Proxmox credentials for the mini-mcp server.
+This guide explains how to configure Proxmox credentials for the mini-mcp server to enable Proxmox VM management and monitoring capabilities.
 
 ## Configuration Methods
 
@@ -86,6 +86,8 @@ proxmox:
 - Enable SSL verification in production (`verify_ssl: true`)
 - Consider using environment variables for sensitive data
 - The configuration file is automatically ignored by git
+- Rotate API tokens regularly for enhanced security
+- Use least-privilege access for API tokens
 
 ## Configuration Priority
 
@@ -104,6 +106,17 @@ mini-mcp-cli proxmox_status
 # Or through MCP protocol
 # The tool will automatically use the configured credentials
 ```
+
+### Available Proxmox Tools
+
+- **`proxmox_status`**: Get Proxmox cluster status and VM information
+- **`proxmox_vm_list`**: List all VMs with detailed information
+- **`proxmox_vm_start`**: Start a specific VM
+- **`proxmox_vm_stop`**: Stop a specific VM
+- **`proxmox_vm_restart`**: Restart a specific VM
+- **`proxmox_vm_backup`**: Create VM backups
+- **`proxmox_vm_clone`**: Clone VMs
+- **`proxmox_vm_snapshot`**: Create and manage VM snapshots
 
 ## Troubleshooting
 

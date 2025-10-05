@@ -1,15 +1,17 @@
 # Mini MCP Installer
 
-This package provides functionality to build, install, and configure the mini-mcp tool on your system.
+This package provides comprehensive functionality to build, install, and configure the mini-mcp tool on your system with enterprise-grade reliability and cross-platform support.
 
 ## Features
 
-- **Build**: Compile the mini-mcp binary
-- **Install**: Install the binary to system PATH
-- **Uninstall**: Remove the binary from system PATH
+- **Build**: Compile the mini-mcp binary with optimizations
+- **Install**: Install the binary to system PATH with proper permissions
+- **Uninstall**: Remove the binary from system PATH cleanly
 - **Configure**: Update VS Code and Cursor settings automatically
-- **Status**: Check installation status
+- **Status**: Check installation status and configuration
 - **Cross-platform**: Works on Windows, macOS, and Linux
+- **Security**: Validates installation paths and permissions
+- **Logging**: Comprehensive logging for debugging and audit trails
 
 ## Installation Paths
 
@@ -18,6 +20,14 @@ The installer automatically determines the appropriate installation path based o
 - **Windows**: `%USERPROFILE%\bin\mini-mcp.exe`
 - **macOS/Linux**: `/usr/local/bin/mini-mcp`
 - **Other**: `$HOME/bin/mini-mcp`
+
+### Path Validation
+
+The installer validates installation paths to ensure:
+- Target directory exists and is writable
+- Binary has proper executable permissions
+- PATH environment variable includes installation directory
+- No conflicts with existing installations
 
 ## Usage
 
@@ -144,6 +154,8 @@ The installer provides comprehensive error handling and logging:
 - **Permission errors**: Helpful messages for permission issues
 - **Path errors**: Validation of project and installation paths
 - **Configuration errors**: Graceful handling of settings file issues
+- **Network errors**: Handling of remote installation scenarios
+- **Rollback support**: Automatic cleanup on installation failures
 
 ## Logging
 

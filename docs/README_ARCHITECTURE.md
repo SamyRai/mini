@@ -4,7 +4,7 @@
 
 ## Overview
 
-Mini MCP is a secure infrastructure management tool that provides both CLI and HTTP server interfaces for executing commands, managing files, and monitoring systems. The project follows a clean, domain-driven architecture with clear separation of concerns.
+Mini MCP is a production-ready infrastructure management platform that provides both MCP server and CLI interfaces for secure command execution, file operations, and system monitoring. The project follows clean architecture principles with domain-driven design, comprehensive type safety, and enterprise-grade security.
 
 ## Architecture
 
@@ -173,23 +173,40 @@ The shared layer contains cross-cutting concerns used throughout the application
 
 Each file and package has a single, well-defined responsibility:
 
-- Domain files focus on business logic
-- Application files focus on use cases
-- Infrastructure files focus on external concerns
+- Domain files focus on business logic and domain models
+- Application files focus on use cases and orchestration
+- Infrastructure files focus on external concerns (CLI, HTTP, persistence)
+- Shared files focus on cross-cutting concerns (auth, config, logging, security)
 
 ### 2. Dependency Inversion
 
 - High-level modules (application) don't depend on low-level modules (infrastructure)
 - Both depend on abstractions (interfaces)
 - Abstractions are defined in the domain layer
+- Infrastructure adapts to domain needs, not vice versa
 
 ### 3. Clean Architecture
 
-- Dependencies point inward
+- Dependencies point inward toward the domain
 - Domain layer has no external dependencies
 - Infrastructure adapts to domain needs
+- Clear separation between business logic and external concerns
 
-### 4. File Size Guidelines
+### 4. Type Safety
+
+- Full Go 1.25 generics implementation
+- Compile-time type checking throughout
+- No unsafe type assertions in critical paths
+- Type-safe validation and error handling
+
+### 5. Security-First Design
+
+- Multi-layer security validation
+- Command allowlisting and path validation
+- Input sanitization and output limits
+- Comprehensive audit logging
+
+### 6. File Size Guidelines
 
 - **Domain files**: Max 200 lines
 - **Service files**: Max 150 lines
