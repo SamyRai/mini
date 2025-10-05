@@ -1,0 +1,78 @@
+# Cursor Rules for Enhanced Mini MCP Tool
+
+## MCP Server Configuration
+
+The enhanced mini-mcp tool provides secure infrastructure management capabilities through the MCP protocol. To use it in Cursor:
+
+1. **Install the tool**: Build the mini-mcp binary from the source code
+2. **Configure MCP**: Add the server configuration to your Cursor settings
+3. **Use the tools**: Access infrastructure management capabilities through Cursor
+
+## Available Tools
+
+### Command Execution
+- **execute_command**: Execute shell commands securely with allowlisting
+- **file_operations**: Perform file system operations with path validation
+- **system_monitoring**: Get system information and monitoring data
+- **health_check**: Check system health and service status
+- **get_metrics**: Get application metrics and performance data
+
+### Security Features
+- Command allowlisting prevents dangerous operations
+- Path validation protects sensitive directories
+- Input sanitization prevents injection attacks
+- Rate limiting prevents abuse
+- Authentication required for all operations
+
+### Usage Examples
+
+```bash
+# Execute a safe command
+execute_command: {"command": "ls -la /tmp"}
+
+# Read a file
+file_operations: {"operation": "read", "path": "/tmp/test.txt"}
+
+# Check system health
+health_check: {"service": "all"}
+
+# Get metrics
+get_metrics: {"type": "all"}
+```
+
+## Configuration
+
+Add this to your Cursor settings.json:
+
+```json
+{
+  "mcpServers": {
+    "mini-mcp-enhanced": {
+      "command": "./mini-mcp",
+      "args": [],
+      "env": {
+        "ENVIRONMENT": "development",
+        "LOG_LEVEL": "INFO",
+        "PORT": ":8080"
+      },
+      "cwd": ".",
+      "description": "Enhanced Mini MCP Infrastructure Management Tool"
+    }
+  }
+}
+```
+
+## Security Notes
+
+- All commands are validated against an allowlist
+- Dangerous patterns are automatically blocked
+- Sensitive paths are protected
+- Rate limiting is enforced
+- Authentication is required for all operations
+
+## Troubleshooting
+
+- Check the health endpoint: `curl http://localhost:8080/health`
+- Verify authentication: Ensure API key is provided
+- Check logs: Monitor structured JSON logs for debugging
+- Validate configuration: Ensure all environment variables are set correctly

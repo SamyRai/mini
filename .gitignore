@@ -11,11 +11,18 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-# Dependency directories (remove the comment below to include it)
-# vendor/
+# Dependency directories
+vendor/
 
-# Go workspace file
+# Go workspace files
 go.work
+go.work.sum
+
+# Build output
+mini-mcp
+mini-mcp-cli
+dist/
+build/
 
 # IDE files
 .vscode/
@@ -24,7 +31,7 @@ go.work
 *.swo
 *~
 
-# OS generated files
+# OS files
 .DS_Store
 .DS_Store?
 ._*
@@ -33,33 +40,167 @@ go.work
 ehthumbs.db
 Thumbs.db
 
-# Credentials and sensitive files
-proxmox-auth.yaml
-*.key
-*.pem
-*.p12
-*.pfx
-.env
-.env.local
-.env.production
-.env.staging
-
 # Logs
 *.log
 logs/
 
-# Build artifacts and binaries
-bin/
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
 
-# Test and debug output files
-*_output.json
-*.out
+# Coverage directory used by tools like istanbul
+coverage/
+coverage.out
+coverage.html
 
-# Temporary files
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
+# Dependency directories
+node_modules/
+
+# TypeScript v1 declaration files
+typings/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+public
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
 tmp/
 temp/
+
+# Editor directories and files
+!.vscode/extensions.json
+.history/*
+
+# Local configuration files (sensitive data)
+proxmox-auth.yaml
+config.local.yaml
+config.local.json
+*.key
+*.pem
+private/
+secrets/
+credentials/
+
+# Docker
+.dockerignore
+
+# Temporary files
+*.tmp
+*.temp
+
+# Database files (if any local development databases)
+*.db
+*.sqlite
+*.sqlite3
+
+# Test artifacts
+test-results/
+test-output/
+*.prof
+
+# Documentation build output
+docs/build/
+docs/.vuepress/dist
+
+# Release artifacts
+releases/
+*.tar.gz
+*.zip
+
+# Platform-specific files
+*.exe
+*.bat
+*.cmd
+*.com
+*.pif
+*.scr
+*.vbs
+*.jsa
+
+# Backup files
+*.bak
+*.backup
+
+# Application-specific
+# Add any application-specific files that shouldn't be committed
+*.local
+local/
+debug/
+
+# Terraform (if used)
+*.tfstate
+*.tfstate.*
+.terraform/
+terraform.tfvars
+
+# Ansible (if used)
+*.retry
+
+# Vagrant (if used)
+.vagrant/
+
+# Packer (if used)
+*.pkrvars.hcl

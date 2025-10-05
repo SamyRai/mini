@@ -1,0 +1,24 @@
+# Global code owners
+* @YOUR_USERNAME
+
+# Documentation
+/docs/ @YOUR_USERNAME
+*.md @YOUR_USERNAME
+
+# GitHub workflows
+/.github/ @YOUR_USERNAME
+
+# Go source code
+*.go @YOUR_USERNAME
+
+# Configuration files
+go.mod @YOUR_USERNAME
+go.sum @YOUR_USERNAME
+Makefile @YOUR_USERNAME
+Dockerfile @YOUR_USERNAME
+docker-compose.yml @YOUR_USERNAME
+
+# Security-related files
+SECURITY.md @YOUR_USERNAME
+.github/workflows/security.yml @YOUR_USERNAME
+.github/workflows/codeql.yml @YOUR_USERNAME

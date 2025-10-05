@@ -1,0 +1,21 @@
+# Ignore build artifacts
+mini-mcp
+mini-mcp-cli
+bin/
+
+# Ignore development files
+*.log
+.DS_Store
+.vscode/
+.idea/
+
+# Ignore test files
+*_test.go
+test/
+
+# Ignore vendor (we use go mod)
+vendor/
+
+# Ignore temporary files
+tmp/
+temp/

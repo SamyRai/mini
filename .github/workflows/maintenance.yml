@@ -1,0 +1,140 @@
+name: Maintenance
+
+on:
+  schedule:
+    - cron: '0 6 * * 1' # Weekly on Monday at 6 AM UTC
+  workflow_dispatch:
+    inputs:
+      maintenance_type:
+        description: 'Type of maintenance to run'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - dependencies
+          - security
+          - cleanup
+
+jobs:
+  dependency-maintenance:
+    name: Dependency Maintenance
+    runs-on: ubuntu-latest
+    if: ${{ inputs.maintenance_type == 'all' || inputs.maintenance_type == 'dependencies' }}
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.25'
+        cache: true
+        cache-dependency-path: '**/go.sum'
+
+    - name: Download dependencies
+      run: go mod download
+
+    - name: Check for outdated dependencies
+      run: |
+        go install github.com/psampaz/go-mod-outdated@latest
+        go list -u -m all
+
+    - name: Run go mod tidy
+      run: go mod tidy
+
+    - name: Run go mod verify
+      run: go mod verify
+
+    - name: Check for unused dependencies
+      run: |
+        go install honnef.co/go/tools/cmd/staticcheck@latest
+        staticcheck -checks=all ./...
+
+  security-maintenance:
+    name: Security Maintenance
+    runs-on: ubuntu-latest
+    if: ${{ inputs.maintenance_type == 'all' || inputs.maintenance_type == 'security' }}
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.25'
+        cache: true
+        cache-dependency-path: '**/go.sum'
+
+    - name: Download dependencies
+      run: go mod download
+
+    - name: Run govulncheck
+      run: |
+        go install golang.org/x/vuln/cmd/govulncheck@latest
+        govulncheck ./...
+
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+        severity: 'CRITICAL,HIGH,MEDIUM'
+
+    - name: Upload Trivy scan results
+      if: always()
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: 'trivy-results.sarif'
+
+  cleanup:
+    name: Cleanup
+    runs-on: ubuntu-latest
+    if: ${{ inputs.maintenance_type == 'all' || inputs.maintenance_type == 'cleanup' }}
+    permissions:
+      contents: read
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.25'
+        cache: true
+        cache-dependency-path: '**/go.sum'
+
+    - name: Download dependencies
+      run: go mod download
+
+    - name: Clean up build artifacts
+      run: |
+        go clean -cache
+        go clean -modcache
+
+    - name: Check for dead code
+      run: |
+        go install github.com/remyoudompheng/go-misc/deadcode@latest
+        deadcode ./...
+
+    - name: Check for unused code
+      run: |
+        go install github.com/tsenart/deadcode@latest
+        deadcode ./...

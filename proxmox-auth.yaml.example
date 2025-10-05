@@ -1,0 +1,23 @@
+# Proxmox Authentication Configuration Example
+# Copy this file to proxmox-auth.yaml and fill in your credentials
+# DO NOT commit proxmox-auth.yaml to version control!
+
+proxmox:
+  host: "your-proxmox-server.com"
+  
+  # API Token Authentication (Recommended)
+  token_name: "user@pam!token-name"
+  token_value: "your-token-value"
+
+  # Alternative: Username/Password Authentication
+  user: "user@pam"
+  password: "your-password"
+
+  # SSL Configuration
+  verify_ssl: false  # Set to true in production
+
+  # Connection timeout settings
+  timeout: 30
+
+  # Default node (will be auto-detected if not specified)
+  node: "your-node-name"
