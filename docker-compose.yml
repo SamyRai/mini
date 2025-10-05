@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  mini-mcp:
+    build: .
+    container_name: mini-mcp-server
+    stdin_open: true
+    tty: true
+    environment:
+      - LOG_LEVEL=DEBUG
+      - VERSION=1.0.0
+    # Override the default command to keep container running
+    command: ["/app/mini-mcp", "--log-level", "DEBUG"]
+    # Ensure the container doesn't exit
+    restart: unless-stopped

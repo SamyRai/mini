@@ -1,0 +1,675 @@
+{
+  "packageDependencies": {
+    "/Users/damirmukimov/projects/mcp/mini/cmd/mini-mcp": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/handlers",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/config",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/logging",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/security",
+      "/Users/damirmukimov/projects/mcp/mini/internal/types"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/app": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/cli",
+      "/Users/damirmukimov/projects/mcp/mini/internal/server",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/config",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/logging"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/application/command": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/domain/command"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/application/file": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/domain/file"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/application/system": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/domain/system"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/cli": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/handlers",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/config",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/logging"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/command": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/validation"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/file": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/validation"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/validation"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/handlers": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/handlers/core",
+      "/Users/damirmukimov/projects/mcp/mini/internal/handlers/tools",
+      "/Users/damirmukimov/projects/mcp/mini/internal/handlers/resources",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/logging",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/security",
+      "/Users/damirmukimov/projects/mcp/mini/internal/types"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/handlers/core": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/application/file",
+      "/Users/damirmukimov/projects/mcp/mini/internal/domain/file",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/errors",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/security",
+      "/Users/damirmukimov/projects/mcp/mini/internal/types/tools",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/auth",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/logging",
+      "/Users/damirmukimov/projects/mcp/mini/internal/domain/system"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/handlers/resources": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/types/resources",
+      "/Users/damirmukimov/projects/mcp/mini/internal/handlers/core"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/handlers/tools": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/handlers/core",
+      "/Users/damirmukimov/projects/mcp/mini/internal/types/tools"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/infrastructure/cli/handlers": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/application/command",
+      "/Users/damirmukimov/projects/mcp/mini/internal/application/file",
+      "/Users/damirmukimov/projects/mcp/mini/internal/domain/file"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/infrastructure/http/handlers": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/application/command",
+      "/Users/damirmukimov/projects/mcp/mini/internal/application/file",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/auth",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/logging"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/infrastructure/http/middleware": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/auth",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/logging"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/protocol": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/handlers",
+      "/Users/damirmukimov/projects/mcp/mini/internal/types"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/server": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/handlers",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/config",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/logging"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/config": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/auth",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/security",
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/validation"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/types": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/validation",
+      "/Users/damirmukimov/projects/mcp/mini/internal/types/resources",
+      "/Users/damirmukimov/projects/mcp/mini/internal/types/tools"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools": [
+      "/Users/damirmukimov/projects/mcp/mini/internal/shared/validation"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/tools/tea": [
+      "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/app"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/analyzer": [
+      "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/loader",
+      "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/model",
+      "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/util"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/app": [
+      "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/analyzer",
+      "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/graph",
+      "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/loader",
+      "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/model",
+      "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/report"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/report": [
+      "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/model"
+    ]
+  },
+  "interfaceUsage": {
+    "/Users/damirmukimov/projects/mcp/mini/internal/application/command:Service": [
+      "ExecuteCommand",
+      "ValidateCommand"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/application/file:Service": [
+      "ReadFile",
+      "WriteFile",
+      "ListDirectory",
+      "DeleteFile",
+      "ValidateFileOperation"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/application/system:Service": [
+      "GetSystemMetric",
+      "ValidateMetric"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/command:Logger": [
+      "Info",
+      "Error",
+      "Warning"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/command:Repository": [
+      "Execute",
+      "Validate",
+      "Sanitize"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/command:SecurityProvider": [
+      "ExecuteCommand",
+      "SanitizeInput",
+      "IsCommandAllowed"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/command:Service": [
+      "ExecuteCommand",
+      "ValidateCommand"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/file:Logger": [
+      "Info",
+      "Error",
+      "Warning"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/file:Repository": [
+      "Read",
+      "Write",
+      "List",
+      "Delete",
+      "Validate"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/file:SecurityProvider": [
+      "IsPathAllowed",
+      "SanitizePath",
+      "CreateDirectory",
+      "ReadFile",
+      "WriteFile",
+      "ListDirectory",
+      "DeleteFile"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/file:Service": [
+      "ExecuteFileOperation",
+      "ValidateFileOperation"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system:CommandExecutor": [
+      "ExecuteCommand"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system:Logger": [
+      "Info",
+      "Error",
+      "Warning"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system:Repository": [
+      "GetProcesses",
+      "GetDiskUsage",
+      "GetMemoryUsage",
+      "GetNetworkInfo",
+      "GetUptime",
+      "Validate"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system:Service": [
+      "GetSystemMetric",
+      "ValidateSystemRequest"
+    ],
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/validation:Validatable": [
+      "Validate"
+    ]
+  },
+  "structComplexity": {
+    "/Users/damirmukimov/projects/mcp/mini/cmd/mini-mcp.App": 9,
+    "/Users/damirmukimov/projects/mcp/mini/internal/app.App": 6,
+    "/Users/damirmukimov/projects/mcp/mini/internal/app.Config": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/application/command.ServiceImpl": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/application/file.ServiceImpl": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/application/system.ServiceImpl": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/cli.CLI": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/cli.Config": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/command.Command": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/command.CommandError": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/command.ExecutionRequest": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/command.ExecutionResponse": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/command.RepositoryImpl": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/command.Result": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/command.ServiceImpl": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/file.DeleteResponse": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/file.DirectoryListing": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/file.FileError": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/file.FileInfo": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/file.FileRequest": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/file.FileResponse": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/file.ReadResponse": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/file.RepositoryImpl": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/file.ServiceImpl": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/file.WriteResponse": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system.DiskUsageInfo": 9,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system.DiskUsageResponse": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system.MemoryInfo": 8,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system.MemoryUsageResponse": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system.NetworkInfo": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system.NetworkResponse": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system.ProcessInfo": 6,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system.ProcessesResponse": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system.RepositoryImpl": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system.ServiceImpl": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system.SystemError": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system.SystemRequest": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system.SystemResponse": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system.UptimeInfo": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system.UptimeResponse": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/handlers.MCPHandler": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/handlers/core.HandlerContext": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/handlers/tools.ProxmoxResponse": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/handlers/tools.VM": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/health.CheckResult": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/health.Dependency": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/health.DependencyStatus": 6,
+    "/Users/damirmukimov/projects/mcp/mini/internal/health.FallbackConfig": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/health.HealthChecker": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/health.HealthInfo": 6,
+    "/Users/damirmukimov/projects/mcp/mini/internal/infrastructure/cli/handlers.CommandHandler": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/infrastructure/cli/handlers.FileHandler": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/infrastructure/http/handlers.Handlers": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/infrastructure/http/middleware.responseWriter": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/server.Config": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/server.Server": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/config.AuthConfig": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/config.Config": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/config.FeatureFlags": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/config.PerformanceConfig": 8,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/config.SecurityConfig": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/errors.ErrorAggregator": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/errors.ErrorResponse": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/errors.RetryConfig": 6,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/logging.ContextLogger": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/logging.LogEntry": 11,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/logging.Logger": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/logging.Metrics": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/logging.ToolLogger": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/security.CommandSecurity": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/security.CommandSecurityAdapter": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/security.FileSecurityAdapter": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/security.SecureCommandExecutor": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/security.SecurityConfig": 8,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/validation.ComparableValidatorBuilder": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/validation.Rule": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/validation.ValidationError": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/validation.ValidationResult": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/validation.ValidatorBuilder": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types.MCPMessage": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types.MCPResponse": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types.Metadata": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types.Resource": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types.ResourceAccessRequest": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types.ResourceAccessResponse": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types.SchemaObject": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types.SchemaProperty": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types.Tool": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types.ToolUseRequest": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types.ToolUseResponse": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.Alert": 6,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.CPUDetails": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.CephInfo": 6,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.CephMonMap": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.CephOSDMap": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.CephPGMap": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.CephPool": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.CloudInfo": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.CommandDoc": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.DNSConfig": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.DiskIOStats": 6,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.DiskInfo": 8,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.DockerContainer": 8,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.DockerContainerStats": 8,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.DockerError": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.DockerImage": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.DockerInfo": 10,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.DockerNetwork": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.DockerPort": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.DockerRawOutput": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.DockerVolume": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.FirewallRule": 6,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.InfrastructureInfo": 14,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.KubernetesDeployment": 6,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.KubernetesEvent": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.KubernetesInfo": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.KubernetesNode": 6,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.KubernetesPod": 8,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.KubernetesPort": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.KubernetesService": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.LogEntry": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.MemoryDetails": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.MetricData": 6,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.MetricPoint": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.MetricSummary": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.NetworkConnection": 8,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.NetworkInfo": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.NetworkInterface": 9,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.NomadAllocation": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.NomadAllocationInfo": 11,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.NomadClusterInfo": 6,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.NomadClusterStats": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.NomadInfo": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.NomadJob": 6,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.NomadJobInfo": 9,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.NomadNetworkResource": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.NomadNode": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.NomadNodeInfo": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.NomadNodeResources": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.NomadResources": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.NomadTaskGroupInfo": 6,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.NomadTaskInfo": 8,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.NomadTaskResources": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.Process": 11,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.ProcessIOStats": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.ProcessInfo": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.ProxmoxContainer": 11,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.ProxmoxInfo": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.ProxmoxNode": 6,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.ProxmoxStorage": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.ProxmoxVM": 11,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.Route": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.Service": 6,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.ServiceInfo": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.SwapMemory": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources.SystemInfo": 14,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.CephArgs": 0,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.CloudInfoArgs": 12,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.CommandArgs": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.DocArgs": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.DockerComposeDownArgs": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.DockerComposeUpArgs": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.DockerInfoArgs": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.DockerSwarmInfoArgs": 0,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.FileOperationsArgs": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.GitCloneArgs": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.InfrastructureInfoArgs": 16,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.KubernetesInfoArgs": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.NetworkInfoArgs": 6,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.NomadJobArgs": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.NomadScaleArgs": 4,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.NomadStatusArgs": 2,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.NomadStopArgs": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.ProcessInfoArgs": 7,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.ProxmoxArgs": 3,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.SSHCommandArgs": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.ServiceInfoArgs": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.SystemInfoArgs": 5,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.SystemMonitoringArgs": 1,
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools.ValidationError": 2,
+    "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/loader.Package": 8,
+    "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/model.Analysis": 6,
+    "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/model.Graph": 1,
+    "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/model.PackageMetrics": 6
+  },
+  "layerViolations": [],
+  "cyclicDependencies": null,
+  "codeMetrics": {
+    "/Users/damirmukimov/projects/mcp/mini/cmd/mini-mcp": {
+      "linesOfCode": 227,
+      "cyclomaticComplexity": 21,
+      "dependencies": 15,
+      "abstractions": 0,
+      "concreteTypes": 1,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/app": {
+      "linesOfCode": 145,
+      "cyclomaticComplexity": 17,
+      "dependencies": 10,
+      "abstractions": 0,
+      "concreteTypes": 2,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/application/command": {
+      "linesOfCode": 57,
+      "cyclomaticComplexity": 5,
+      "dependencies": 2,
+      "abstractions": 1,
+      "concreteTypes": 1,
+      "abstractionRatio": 1
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/application/file": {
+      "linesOfCode": 132,
+      "cyclomaticComplexity": 16,
+      "dependencies": 2,
+      "abstractions": 1,
+      "concreteTypes": 1,
+      "abstractionRatio": 1
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/application/system": {
+      "linesOfCode": 55,
+      "cyclomaticComplexity": 5,
+      "dependencies": 2,
+      "abstractions": 1,
+      "concreteTypes": 1,
+      "abstractionRatio": 1
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/cli": {
+      "linesOfCode": 143,
+      "cyclomaticComplexity": 15,
+      "dependencies": 10,
+      "abstractions": 0,
+      "concreteTypes": 2,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/command": {
+      "linesOfCode": 51,
+      "cyclomaticComplexity": 0,
+      "dependencies": 1,
+      "abstractions": 0,
+      "concreteTypes": 4,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/file": {
+      "linesOfCode": 68,
+      "cyclomaticComplexity": 0,
+      "dependencies": 1,
+      "abstractions": 0,
+      "concreteTypes": 7,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/domain/system": {
+      "linesOfCode": 110,
+      "cyclomaticComplexity": 0,
+      "dependencies": 1,
+      "abstractions": 0,
+      "concreteTypes": 12,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/handlers": {
+      "linesOfCode": 128,
+      "cyclomaticComplexity": 15,
+      "dependencies": 7,
+      "abstractions": 0,
+      "concreteTypes": 1,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/handlers/core": {
+      "linesOfCode": 69,
+      "cyclomaticComplexity": 5,
+      "dependencies": 7,
+      "abstractions": 0,
+      "concreteTypes": 0,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/handlers/resources": {
+      "linesOfCode": 194,
+      "cyclomaticComplexity": 30,
+      "dependencies": 7,
+      "abstractions": 0,
+      "concreteTypes": 0,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/handlers/tools": {
+      "linesOfCode": 63,
+      "cyclomaticComplexity": 12,
+      "dependencies": 4,
+      "abstractions": 0,
+      "concreteTypes": 0,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/health": {
+      "linesOfCode": 392,
+      "cyclomaticComplexity": 35,
+      "dependencies": 6,
+      "abstractions": 0,
+      "concreteTypes": 6,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/infrastructure/cli/handlers": {
+      "linesOfCode": 45,
+      "cyclomaticComplexity": 6,
+      "dependencies": 3,
+      "abstractions": 0,
+      "concreteTypes": 1,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/infrastructure/http/handlers": {
+      "linesOfCode": 139,
+      "cyclomaticComplexity": 11,
+      "dependencies": 6,
+      "abstractions": 0,
+      "concreteTypes": 1,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/infrastructure/http/middleware": {
+      "linesOfCode": 110,
+      "cyclomaticComplexity": 10,
+      "dependencies": 5,
+      "abstractions": 0,
+      "concreteTypes": 1,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/protocol": {
+      "linesOfCode": 365,
+      "cyclomaticComplexity": 26,
+      "dependencies": 6,
+      "abstractions": 0,
+      "concreteTypes": 0,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/server": {
+      "linesOfCode": 111,
+      "cyclomaticComplexity": 10,
+      "dependencies": 8,
+      "abstractions": 0,
+      "concreteTypes": 2,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/config": {
+      "linesOfCode": 333,
+      "cyclomaticComplexity": 41,
+      "dependencies": 8,
+      "abstractions": 0,
+      "concreteTypes": 5,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/errors": {
+      "linesOfCode": 284,
+      "cyclomaticComplexity": 39,
+      "dependencies": 3,
+      "abstractions": 0,
+      "concreteTypes": 3,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/logging": {
+      "linesOfCode": 408,
+      "cyclomaticComplexity": 53,
+      "dependencies": 7,
+      "abstractions": 0,
+      "concreteTypes": 5,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/security": {
+      "linesOfCode": 259,
+      "cyclomaticComplexity": 36,
+      "dependencies": 8,
+      "abstractions": 0,
+      "concreteTypes": 4,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/shared/validation": {
+      "linesOfCode": 214,
+      "cyclomaticComplexity": 56,
+      "dependencies": 5,
+      "abstractions": 0,
+      "concreteTypes": 0,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/types": {
+      "linesOfCode": 20,
+      "cyclomaticComplexity": 0,
+      "dependencies": 2,
+      "abstractions": 0,
+      "concreteTypes": 0,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/resources": {
+      "linesOfCode": 215,
+      "cyclomaticComplexity": 2,
+      "dependencies": 1,
+      "abstractions": 0,
+      "concreteTypes": 8,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/internal/types/tools": {
+      "linesOfCode": 76,
+      "cyclomaticComplexity": 3,
+      "dependencies": 1,
+      "abstractions": 0,
+      "concreteTypes": 1,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/tools/tea": {
+      "linesOfCode": 25,
+      "cyclomaticComplexity": 2,
+      "dependencies": 5,
+      "abstractions": 0,
+      "concreteTypes": 0,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/analyzer": {
+      "linesOfCode": 115,
+      "cyclomaticComplexity": 22,
+      "dependencies": 7,
+      "abstractions": 0,
+      "concreteTypes": 0,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/app": {
+      "linesOfCode": 30,
+      "cyclomaticComplexity": 3,
+      "dependencies": 6,
+      "abstractions": 0,
+      "concreteTypes": 0,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/graph": {
+      "linesOfCode": 16,
+      "cyclomaticComplexity": 2,
+      "dependencies": 1,
+      "abstractions": 0,
+      "concreteTypes": 0,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/loader": {
+      "linesOfCode": 63,
+      "cyclomaticComplexity": 6,
+      "dependencies": 4,
+      "abstractions": 0,
+      "concreteTypes": 1,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/model": {
+      "linesOfCode": 33,
+      "cyclomaticComplexity": 0,
+      "dependencies": 0,
+      "abstractions": 0,
+      "concreteTypes": 3,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/report": {
+      "linesOfCode": 23,
+      "cyclomaticComplexity": 3,
+      "dependencies": 4,
+      "abstractions": 0,
+      "concreteTypes": 0,
+      "abstractionRatio": 0
+    },
+    "/Users/damirmukimov/projects/mcp/mini/tools/tea/internal/util": {
+      "linesOfCode": 12,
+      "cyclomaticComplexity": 2,
+      "dependencies": 1,
+      "abstractions": 0,
+      "concreteTypes": 0,
+      "abstractionRatio": 0
+    }
+  }
+}
