@@ -59,7 +59,7 @@ jobs:
 
     - name: Upload Trivy scan results to GitHub Security tab
       if: always() && (inputs.scan_type == 'all' || inputs.scan_type == 'dependencies')
-      uses: github/codeql-action/upload-sarif@v3
+      uses: github/codeql-action/upload-sarif@v4
       with:
         sarif_file: 'trivy-results.sarif'
 
@@ -71,7 +71,7 @@ jobs:
 
     - name: Upload Gosec scan results
       if: always() && (inputs.scan_type == 'all' || inputs.scan_type == 'code')
-      uses: github/codeql-action/upload-sarif@v3
+      uses: github/codeql-action/upload-sarif@v4
       with:
         sarif_file: gosec.sarif
 
@@ -89,7 +89,7 @@ jobs:
 
     - name: Upload Semgrep scan results
       if: always() && (inputs.scan_type == 'all' || inputs.scan_type == 'code')
-      uses: github/codeql-action/upload-sarif@v3
+      uses: github/codeql-action/upload-sarif@v4
       with:
         sarif_file: /tmp/semgrep.sarif
 
@@ -138,7 +138,7 @@ jobs:
 
     - name: Upload Dependency Check results
       if: always()
-      uses: github/codeql-action/upload-sarif@v3
+      uses: github/codeql-action/upload-sarif@v4
       with:
         sarif_file: './dependency-check-report.sarif'
 
@@ -176,7 +176,7 @@ jobs:
         go-licenses check ./...
 
     - name: Upload license report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: license-report
         path: licenses.txt
@@ -207,6 +207,6 @@ jobs:
 
     - name: Upload Trivy container scan results
       if: always()
-      uses: github/codeql-action/upload-sarif@v3
+      uses: github/codeql-action/upload-sarif@v4
       with:
         sarif_file: 'trivy-container-results.sarif'
